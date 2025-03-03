@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abikasse A26</title>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 15px;
+            background-color: #f4f4f9;
+            margin: 0;
+            height: 100%;
+        }
+        .container{
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1{
+            color: #333;
+        }
+        #kontostand{
+            font-size: 2rem;
+            color: green;
+            margin-bottom: 20px;
+        }
+        .diagrammContainer{
+            position: relative;
+            width: 100%;
+            height: 400px;
+            max-height: 400px;
+            margin: 20px auto;
+        }
+        #tabellenContainer{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+        }
+        canvas{
+            width: 0;
+            height: 0;
+        }
+        .laden{
+            font-size: 1rem;
+            color: #888;
+        }
+        #tabelle{
+            text-align: left;
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 50%;
+        }
+        td, th{
+            border: solid rgb(128, 128, 128) 1px;
+            padding: 2px;
+            padding-right: 5px;
+        }
+        th{
+            background-color: #4d4d4d;
+            color: white;
+        }
+        tr:hover{
+            background-color: rgb(231, 231, 231);
+            transition: 0.4s;
+        }
+
+    /*Dark-Mode*/
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: rgb(77, 77, 77);
+            color: rgb(0, 0, 0);
+        }
+        .container{
+            background-color: rgb(235, 235, 235);
+        }
+        .laden{
+            color: rgb(84, 84, 84);
+        }
+    }
+    </style>
+    
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "qgijsrlfe7");
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Abikasse A26</h1>
+        <p id="kontostand" class="laden">Lade Kontostand...</p>
+        <p id="geschaft" class="laden">geschafft: laden...</p>
+
+        <div class="diagrammContainer">
+            <canvas id="diagramm"></canvas>
+        </div>
+        <div id="tabellenContainer">
+            <table id="tabelle">
+                <tr>
+                    <th>Datum</th>
+                    <th>Aktion</th>
+                    <th>Betrag</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        let diagramm;
+        let chartPosition;
+
+        fetch('kontostand.json')
+                .then(response => response.json())
+                .then(data => {
+
+        //Kontostand
+        const engSchr = data.aktionen.reduce((total, aktion) => total + aktion.betrag, 0);
+        const deSchr = engSchr.toFixed(2).toString().split('.');
+        document.getElementById("kontostand").innerText = deSchr.join(',') + " €";
+        document.getElementById("geschaft").innerText = "geschafft: " + Math.round(data.betrag/data.ziel*100)+"%";
+
+        function diagrammErstellen(){
+            document.getElementById("diagramm").style.width = 0;
+            document.getElementById("diagramm").style.height = 0;
+            let breite = window.innerWidth;
+            let horizontal = false;
+            let achse = "y";
+
+                    //Diagram
+                    const labels = data.monate.map(item => item.monat);
+                    const werte = data.monate.map(item => item.betrag);
+
+                    if (breite < 600) {
+                        horizontal = true;
+                        achse = "x";
+                    }
+
+                    let chart = document.getElementById('diagramm').getContext('2d');
+                    
+                    if (chartPosition) {
+                        chartPosition.destroy();
+                    }
+                    
+                    chartPosition = new Chart(chart, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Einnahmen',
+                                data: werte,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            indexAxis: horizontal ? 'y' : 'x',
+                            scales: {
+                                [achse]: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value + ' €';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+        }
+
+        //Tabelle
+        function tabelleErstellen(){
+        const tabelle = document.getElementById("tabelle");
+        data.aktionen.forEach(aktionen => {
+            const tr = document.createElement("tr");
+            const geld = aktionen.betrag;
+            const geldgetrennt= geld.toFixed(2).toString().split('.');
+            const geldMitZeichen = geldgetrennt.join(',') + " €";
+            tr.innerHTML = `<td>${aktionen.datum}</td><td>${aktionen.aktion}</td><td>${geldMitZeichen}</td>`;
+            tabelle.appendChild(tr);
+        });
+        }
+
+        diagrammErstellen();
+        tabelleErstellen();
+        window.addEventListener('resize', function() {
+            diagrammErstellen();
+        });
+    })
+    .catch(error => console.error('Fehler beim Laden der JSON-Datei:', error));
+
+    </script>
+</body>
+</html>
