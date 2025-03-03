@@ -1,2 +1,2 @@
 # abikasse
-abikasse
+Zur Veröffendlichung von Einnahmen.
