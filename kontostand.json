@@ -5,7 +5,7 @@
       {"monat": "Dez24", "betrag": 2006.59},
       {"monat": "Jan25", "betrag": 1.15},
       {"monat": "Feb25", "betrag": 51.27},
-      {"monat": "Mär25", "betrag": 22.80}
+      {"monat": "Mär25", "betrag": 28.20}
     ],
     "aktionen": [
       {"datum": "Dez.24","aktion": "Bachadvent", "betrag": 1102.50},
@@ -14,7 +14,7 @@
       {"datum": "Jan.25","aktion": "Pfand", "betrag": 1.15},
       {"datum": "Feb.25","aktion": "Pfand", "betrag": 20.22},
       {"datum": "Feb.25","aktion": "Valentinstag", "betrag": 31.05},
-      {"datum": "Mär.25","aktion": "Pfand", "betrag": 22.80}
+      {"datum": "Mär.25","aktion": "Pfand", "betrag": 28.20}
     ]
   }
   
