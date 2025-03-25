@@ -28,6 +28,7 @@
             color: #333;
         }
         #kontostand{
+            position: sticky;
             font-size: 2rem;
             color: green;
             margin-bottom: 20px;
@@ -38,6 +39,7 @@
             height: 400px;
             max-height: 400px;
             margin: 20px auto;
+            padding-bottom: 30px;
         }
         #tabellenContainer{
             position: relative;
@@ -104,6 +106,12 @@
         <p id="geschaft" class="laden">geschafft: laden...</p>
 
         <div class="diagrammContainer">
+            <h2>Pfand-Aktion</h2>
+            <canvas id="diagrammPfand"></canvas>
+        </div>
+        <br>
+        <div class="diagrammContainer">
+            <h2>Einnahmen</h2>
             <canvas id="diagramm"></canvas>
         </div>
         <div id="tabellenContainer">
@@ -141,8 +149,13 @@
             let achse = "y";
 
                     //Diagram
-                    const labels = data.monate.map(item => item.monat);
-                    const werte = data.monate.map(item => item.betrag);
+                    const monatsSummen = {};
+                        data.aktionen.forEach(({ datum, betrag }) => {
+                        monatsSummen[datum] = (monatsSummen[datum] || 0) + betrag;
+                    });
+
+                    const labels = Object.keys(monatsSummen);
+                    const werte = Object.values(monatsSummen);
 
                     if (breite < 600) {
                         horizontal = true;
@@ -184,6 +197,62 @@
                     });
         }
 
+
+        //Diagramm Pfand
+        let chartPfand;
+
+        function pfandDiagrammErstellen(){
+        fetch("pfand.csv")
+            .then(response => response.text())
+            .then(data => {
+                let zeilen = data.split("\n");
+                let labels = [];
+                let werte = [];
+                let summe = 0;
+
+                for (let i = 1; i < zeilen.length; i++) {
+                    let teile = zeilen[i].split(";");
+                    let datum = teile[0];
+                    let betrag = parseFloat(teile[1]);
+
+                    if (!isNaN(betrag)) {
+                        summe += betrag;
+                        labels.push(datum);
+                        werte.push(summe);
+                    }
+                }
+
+                if (chartPfand) {
+                    chartPfand.destroy();
+                }
+                // Diagramm erstellen
+                chartPfand = new Chart(document.getElementById("diagrammPfand"), {
+                    type: "line",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Pfand",
+                            data: werte,
+                            borderColor: "green",
+                            backgroundColor: "rgba(0, 255, 0, 0.1)",
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + " €";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
         //Tabelle
         function tabelleErstellen(){
         const tabelle = document.getElementById("tabelle");
@@ -197,13 +266,21 @@
         });
         }
 
+        pfandDiagrammErstellen();
         diagrammErstellen();
         tabelleErstellen();
         window.addEventListener('resize', function() {
             diagrammErstellen();
+            pfandDiagrammErstellen();
         });
     })
     .catch(error => console.error('Fehler beim Laden der JSON-Datei:', error));
+
+
+    window.addEventListener("resize", function() {
+    // Seite neu laden, wenn die Fenstergröße geändert wird
+    location.reload();
+});
 
     </script>
 </body>
