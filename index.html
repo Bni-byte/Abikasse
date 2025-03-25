@@ -38,7 +38,8 @@
             width: 100%;
             height: 400px;
             margin: 20px auto;
-            padding-bottom: 30px;
+            padding-bottom: 80px;
+            padding-top: 10px;
         }
         #tabellenContainer{
             position: relative;
@@ -123,12 +124,12 @@
         <h1>Abikasse A26</h1>
         <p id="kontostand" class="laden">Lade Kontostand...</p>
         <p id="geschaft" class="laden">geschafft: laden...</p>
-
+        
         <div class="diagrammContainer">
             <h2>Pfand-Aktion</h2>
             <canvas id="diagrammPfand"></canvas>
         </div>
-        <br>
+        <r>
         <div class="diagrammContainer">
             <h2>Einnahmen</h2>
             <canvas id="diagramm"></canvas>
@@ -171,7 +172,7 @@
             let achse = "y";
             let andereAchse = "x";
 
-                    //Diagram
+                    //Diagramm
                     const monatsSummen = {};
                         data.aktionen.forEach(({ datum, betrag }) => {
                         monatsSummen[datum] = (monatsSummen[datum] || 0) + betrag;
@@ -215,6 +216,9 @@
                                         callback: function(value) {
                                             return value + ' €';
                                         }
+                                    },
+                                    grid: {
+                                        color: darkMode ? "#303030" : "#C0C0C0"
                                     }
                                 },
                                 [andereAchse]: {
