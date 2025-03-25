@@ -78,14 +78,34 @@
     /*Dark-Mode*/
     @media (prefers-color-scheme: dark) {
         body {
-            background-color: rgb(77, 77, 77);
-            color: rgb(0, 0, 0);
+            background-color: #282828;
+            color: rgb(255, 255, 255);
         }
         .container{
-            background-color: rgb(235, 235, 235);
+            background-color: #121212;
         }
         .laden{
             color: rgb(84, 84, 84);
+        }
+        #geschaft{
+            color: rgb(195, 195, 195);
+        }
+        #kontostand{
+            color: #00cf00;
+        }
+        h1{
+            color: rgb(255, 255, 255);
+        }
+        #tabelle{
+            border: solid rgb(128, 128, 128) 1px;
+        }
+        th{
+            background-color: rgb(84, 84, 84);
+            color: rgb(255, 255, 255);
+        }
+        tr:hover{
+            background-color: rgb(84, 84, 84);
+            transition: 0.4s;
         }
     }
     </style>
@@ -127,6 +147,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+        const darkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
 
         let diagramm;
         let chartPosition;
@@ -147,6 +169,7 @@
             let breite = window.innerWidth;
             let horizontal = false;
             let achse = "y";
+            let andereAchse = "x";
 
                     //Diagram
                     const monatsSummen = {};
@@ -160,6 +183,7 @@
                     if (breite < 600) {
                         horizontal = true;
                         achse = "x";
+                        andereAchse = "y";
                     }
 
                     let chart = document.getElementById('diagramm').getContext('2d');
@@ -187,9 +211,15 @@
                                 [achse]: {
                                     beginAtZero: true,
                                     ticks: {
+                                        color: darkMode ? "#ffffff" : "#000000",
                                         callback: function(value) {
                                             return value + ' €';
                                         }
+                                    }
+                                },
+                                [andereAchse]: {
+                                    ticks: {
+                                        color: darkMode ? "#ffffff" : "#000000"
                                     }
                                 }
                             }
@@ -233,7 +263,7 @@
                         datasets: [{
                             label: "Pfand",
                             data: werte,
-                            borderColor: "green",
+                            borderColor: darkMode ? "#00cf00" : "green",
                             backgroundColor: "rgba(0, 255, 0, 0.1)",
                             fill: true
                         }]
@@ -242,9 +272,21 @@
                         scales: {
                             y: {
                                 ticks: {
+                                    color: darkMode ? "#ffffff" : "#000000",
                                     callback: function(value) {
                                         return value + " €";
                                     }
+                                },
+                                grid: {
+                                    color: darkMode ? "#303030" : "#C0C0C0"
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: darkMode ? "#ffffff" : "#000000"
+                                },
+                                grid: {
+                                    color: darkMode ? "#303030" : "#C0C0C0"
                                 }
                             }
                         }
