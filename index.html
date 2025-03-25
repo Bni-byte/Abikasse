@@ -319,10 +319,11 @@
     .catch(error => console.error('Fehler beim Laden der JSON-Datei:', error));
 
 
-    window.addEventListener("resize", function() {
-    // Seite neu laden, wenn die Fenstergröße geändert wird
+    window.addEventListener("orientationchange", function() {
+    // Seite neu laden, wenn sich die Orientierung ändert
     location.reload();
 });
+
 
     </script>
 </body>
