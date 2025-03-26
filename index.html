@@ -296,7 +296,8 @@
                                 unit: "day",
                                 displayFormats: {
                                     day: 'dd.MM.yyyy'
-                                }
+                                },
+                                tooltipFormat: 'dd.MM.yyyy'
                             },
                             ticks: {
                                 color: darkMode ? "#ffffff" : "#000000"
@@ -309,6 +310,14 @@
                     plugins: {
                         legend: {
                             display: false
+                        },
+                        tooltip: {
+                            displayColors: false,
+                            callbacks: {
+                              label: function(tooltipItem) {
+                                return tooltipItem.formattedValue + ' €';
+                              }
+                            }
                         }
                     }
                 }
