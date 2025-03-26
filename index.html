@@ -111,11 +111,13 @@
     </style>
     
     <script type="text/javascript">
+        /*
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
+        */
     </script>
 
 </head>
@@ -145,6 +147,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 
     <script>
         const darkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -238,74 +241,82 @@
 
 
         //Diagramm Pfand
-           function pfandDiagrammErstellen(){
-        fetch("pfand.csv")
-            .then(response => response.text())
-            .then(data => {
-                let zeilen = data.split("\n");
-                let labels = [];
-                let werte = [];
-                let summe = 0;
+        function pfandDiagrammErstellen(){
+    fetch("pfand.csv")
+        .then(response => response.text())
+        .then(data => {
+            let zeilen = data.split("\n");
+            let datenPunkte = [];
+            let summe = 0;
 
-                for (let i = 1; i < zeilen.length; i++) {
-                    let teile = zeilen[i].split(";");
-                    let datum = teile[0];
-                    let betrag = parseFloat(teile[1]);
+            for (let i = 1; i < zeilen.length; i++) {
+                if(zeilen[i].trim() === "") continue;
+                let teile = zeilen[i].split(";");
+                let datumStr = teile[0].trim();
+                let betrag = parseFloat(teile[1]);
 
-                    if (!isNaN(betrag)) {
-                        summe += betrag;
-                        labels.push(datum);
-                        werte.push(summe);
-                    }
+                let datumTeile = datumStr.split(".");
+                let datum = new Date(datumTeile[2], datumTeile[1] - 1, datumTeile[0]);
+
+                if (!isNaN(betrag) && !isNaN(datum.getTime())) {
+                    summe += betrag;
+                    datenPunkte.push({ x: datum, y: summe });
                 }
+            }
 
-                if (chartPfandPosition) {
-                    chartPfandPosition.destroy();
-                }
-                // Diagramm erstellen
-                chartPfandPosition = new Chart(document.getElementById("diagrammPfand").getContext('2d'), {
-                    type: "line",
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: "Pfand",
-                            data: werte,
-                            borderColor: darkMode ? "#00cf00" : "green",
-                            backgroundColor: "rgba(0, 255, 0, 0.1)",
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                ticks: {
-                                    color: darkMode ? "#ffffff" : "#000000",
-                                    callback: function(value) {
-                                        return value + " €";
-                                    }
-                                },
-                                grid: {
-                                    color: darkMode ? "#303030" : "#C0C0C0"
+            if (chartPfandPosition) {
+                chartPfandPosition.destroy();
+            }
+            // Diagramm erstellen
+            chartPfandPosition = new Chart(document.getElementById("diagrammPfand").getContext('2d'), {
+                type: "line",
+                data: {
+                    datasets: [{
+                        label: "Pfand",
+                        data: datenPunkte,
+                        borderColor: darkMode ? "#00cf00" : "green",
+                        backgroundColor: "rgba(0, 255, 0, 0.1)",
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            ticks: {
+                                color: darkMode ? "#ffffff" : "#000000",
+                                callback: function(value) {
+                                    return value + " €";
                                 }
                             },
-                            x: {
-                                ticks: {
-                                    color: darkMode ? "#ffffff" : "#000000"
-                                },
-                                grid: {
-                                    color: darkMode ? "#303030" : "#C0C0C0"
-                                }
+                            grid: {
+                                color: darkMode ? "#303030" : "#C0C0C0"
                             }
                         },
-                        plugins: {
-                            legend: {
-                                display: false
+                        x: {
+                            type: "time", // Zeitachse
+                            time: {
+                                unit: "day",
+                                displayFormats: {
+                                    day: 'dd.MM.yyyy'
+                                }
+                            },
+                            ticks: {
+                                color: darkMode ? "#ffffff" : "#000000"
+                            },
+                            grid: {
+                                color: darkMode ? "#303030" : "#C0C0C0"
                             }
                         }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     }
-                });
+                }
             });
-        }
+        });
+}
 
         //Tabelle
         function tabelleErstellen(){
