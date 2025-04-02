@@ -7,7 +7,8 @@
       {"datum": "Jan.25","aktion": "Pfand", "betrag": 1.15},
       {"datum": "Feb.25","aktion": "Pfand", "betrag": 20.22},
       {"datum": "Feb.25","aktion": "Valentinstag", "betrag": 31.05},
-      {"datum": "Mär.25","aktion": "Pfand", "betrag": 41.00}
+      {"datum": "Mär.25","aktion": "Pfand", "betrag": 41.00},
+      {"datum": "Apr.25","aktion": "Pfand", "betrag": 5.40}
     ]
   }
   
