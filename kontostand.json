@@ -9,7 +9,8 @@
       {"datum": "Feb.25","aktion": "Valentinstag", "betrag": 31.05},
       {"datum": "Mär.25","aktion": "Pfand", "betrag": 41.00},
       {"datum": "Apr.25","aktion": "Pfand", "betrag": 34.07},
-      {"datum": "Apr.25","aktion": "Frühlingsbasar", "betrag": 273.52}
+      {"datum": "Apr.25","aktion": "Frühlingsbasar", "betrag": 273.52},
+      {"datum": "Apr.25","aktion": "Pfand", "betrag": 7.18}
     ]
   }
   
