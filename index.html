@@ -6,7 +6,7 @@
     <!-- Vorschau -->
     <meta property="og:title" content="A26 Abikasse">
     <meta property="og:description" content="Einnahmen/Aktionen der Abikasse A26">
-    <meta property="og:image" content="a26logo.png">
+    <meta property="og:image" content="https://abikasse26.netlify.app/a26logo.png">
     <meta property="og:url" content="https://abikasse26.netlify.app">
     <meta property="og:type" content="A26 Abikasse">
     <meta name="twitter:card" content="A26 Abikasse">
@@ -118,13 +118,13 @@
     }
     </style>
     
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
-    </script>
+    </script>-->
 
 </head>
 <body>
@@ -132,6 +132,12 @@
         <h1>Abikasse A26</h1>
         <p id="kontostand" class="laden">Lade Kontostand...</p>
         <p id="geschaft" class="laden">geschafft: laden...</p>
+
+        <div class="diagrammContainer">
+            <h2>Schulfest Live-Einnahmen</h2>
+            <p class="laden">Lade Schulfest-Einnahmen...</p>
+            <canvas id="schulfestDiagramm"></canvas>
+        </div>
         
         <div class="diagrammContainer">
             <h2>Pfand-Aktion</h2>
@@ -367,6 +373,81 @@
         });
     })
     .catch(error => console.error('Fehler beim Laden der JSON-Datei:', error));
+
+
+    //Schulfest Diagramm
+fetch('https://raw.githubusercontent.com/Bni-byte/Kassensystem/main/schulfest.json')
+  .then(response => response.json())
+  .then(data => {
+    const schulfestDiagramm = document.getElementById('schulfestDiagramm').getContext('2d');
+
+    //5-Minuten-Zeitintervalle
+    const einnahmenProIntervall = {};
+
+    data.forEach(item => {
+      const datum = new Date(item.uhrzeit);
+      const stunden = datum.getHours().toString().padStart(2, '0');
+      const minuten = Math.floor(datum.getMinutes() / 5) * 5;
+      const gerundeteMinuten = minuten.toString().padStart(2, '0');
+      const zeitlabel = `${stunden}:${gerundeteMinuten}`;
+
+      const einnahme = parseFloat(item.preis) * parseInt(item.menge);
+      if (!einnahmenProIntervall[zeitlabel]) {
+        einnahmenProIntervall[zeitlabel] = 0;
+      }
+      einnahmenProIntervall[zeitlabel] += einnahme;
+    });
+
+    const labels = Object.keys(einnahmenProIntervall).sort();
+    const werte = labels.map(label => einnahmenProIntervall[label]);
+
+    new Chart(schulfestDiagramm, {
+      type: 'bar',
+      data: {
+        labels: labels.map(l => l + ' Uhr'),
+        datasets: [{
+          label: 'Einnahmen',
+          data: werte,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: darkMode ? "#ffffff" : "#000000",
+              callback: value => value + ' €'
+            },
+            grid: {
+              color: darkMode ? "#303030" : "#C0C0C0"
+            }
+          },
+          x: {
+            ticks: {
+              color: darkMode ? "#ffffff" : "#000000"
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            displayColors: false,
+            callbacks: {
+              label: tooltipItem => tooltipItem.formattedValue + ' €'
+            }
+          }
+        }
+      }
+    });
+  })
+  .catch(error => console.error('Fehler beim Laden der Schulfest-Daten:', error));
+
 
     </script>
 </body>
