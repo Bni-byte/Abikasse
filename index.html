@@ -82,6 +82,21 @@
             background-color: rgb(231, 231, 231);
             transition: 0.4s;
         }
+        .spinner {
+           width: 40px;
+           height: 40px;
+           border: 4px solid #ccc;
+           border-top: 4px solid #333;
+           border-radius: 50%;
+           animation: spin 0.8s linear infinite;
+           margin: 50px auto;
+         }
+
+         @keyframes spin {
+           100% {
+             transform: rotate(360deg);
+           }
+         }
 
     /*Dark-Mode*/
     @media (prefers-color-scheme: dark) {
@@ -135,7 +150,9 @@
 
         <div class="diagrammContainer">
             <h2>Schulfest Live-Einnahmen</h2>
-            <canvas id="schulfestDiagramm"></canvas>
+            <p>erscheint am Donnerstag ...</p>
+            <div class="spinner"></div>
+            <!--<canvas id="schulfestDiagramm"></canvas>-->
         </div>
         
         <div class="diagrammContainer">
