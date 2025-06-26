@@ -96,6 +96,10 @@
            margin: 50px auto;
          }
 
+         .artikelMengenTabelle {
+           height: auto;
+         }
+
          @keyframes spin {
            100% {
              transform: rotate(360deg);
@@ -137,13 +141,13 @@
     }
     </style>
     
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
-    </script>
+    </script>-->
 
 </head>
 <body>
@@ -152,10 +156,23 @@
         <p id="kontostand" class="laden">Lade Kontostand...</p>
         <p id="geschaft" class="laden">geschafft: laden...</p>
 
-        <div class="diagrammContainer">
+        <div class="diagrammContainer" id ="schulfestContainer">
             <h2>Schulfest Live-Einnahmen</h2>
             <div id="gesamtEinnahmen" style="font-weight: bold; font-size: 1.2em; margin-bottom: 10px;"></div>
             <canvas id="schulfestDiagramm"></canvas>
+        </div>
+        <div class="diagrammContainer" id="artikelMengenTabelle">
+            <h3>Verkaufte Mengen pro Artikel</h3>
+            <table id="artikelMengenTabelle" style="margin: 0 auto; border-collapse: collapse; width: 50%;">
+          <thead>
+                <tr>
+                  <th style="border: 1px solid #ccc; padding: 5px;">Artikel</th>
+                  <th style="border: 1px solid #ccc; padding: 5px;">Verkaufte Menge</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
         </div>
         
         <div class="diagrammContainer">
@@ -439,6 +456,30 @@ fetch('https://raw.githubusercontent.com/Bni-byte/Kassensystem/main/schulfest.js
     } else {
       document.getElementById("geschaft").innerText = "geschafft: -";
     }
+
+
+    // Menge pro Artikel summieren
+const mengenProArtikel = {};
+data.forEach(item => {
+  const artikel = item.sache;
+  const menge = parseInt(item.menge);
+  if (!mengenProArtikel[artikel]) {
+    mengenProArtikel[artikel] = 0;
+  }
+  mengenProArtikel[artikel] += menge;
+});
+
+// Tabelle füllen
+const tbody = document.querySelector("#artikelMengenTabelle tbody");
+tbody.innerHTML = ""; // vorher leeren
+for (const [artikel, menge] of Object.entries(mengenProArtikel)) {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td style="border: 1px solid #ccc; padding: 5px;">${artikel}</td>
+    <td style="border: 1px solid #ccc; padding: 5px; text-align: right;">${menge}</td>
+  `;
+  tbody.appendChild(tr);
+}
 
 
     new Chart(schulfestDiagramm, {
