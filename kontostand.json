@@ -12,7 +12,8 @@
       {"datum": "Apr.25","aktion": "Frühlingsbasar", "betrag": 273.52},
       {"datum": "Mai.25","aktion": "Pfand", "betrag": 33.17},
       {"datum": "Mai.25","aktion": "Weimarexkursion", "betrag": 710.00},
-      {"datum": "Jun.25","aktion": "Pfand", "betrag": 67.71}
+      {"datum": "Jun.25","aktion": "Pfand", "betrag": 67.71},
+      {"datum": "Jun.25","aktion": "Ausgabe Schulfest", "betrag": -1800}
     ]
   }
   
