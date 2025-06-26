@@ -390,7 +390,7 @@
 
 
     //Schulfest Diagramm
-fetch('https://raw.githubusercontent.com/Bni-byte/Kassensystem/main/schulfest.json?nocache=<?= time() ?>')
+fetch('https://raw.githubusercontent.com/Bni-byte/Kassensystem/main/schulfest.json')
   .then(response => response.json())
   .then(data => {
     const schulfestDiagramm = document.getElementById('schulfestDiagramm').getContext('2d');
