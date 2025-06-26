@@ -399,7 +399,7 @@ fetch('https://raw.githubusercontent.com/Bni-byte/Kassensystem/main/schulfest.js
     const einnahmenProIntervall = {};
 
     data.forEach(item => {
-      const datum = new Date(item.uhrzeit);
+      const datum = new Date(`1970-01-01T${item.uhrzeit}`); // Datum mit fester Zeit
       const stunden = datum.getHours().toString().padStart(2, '0');
       const minuten = Math.floor(datum.getMinutes() / 5) * 5;
       const gerundeteMinuten = minuten.toString().padStart(2, '0');
