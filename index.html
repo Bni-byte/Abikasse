@@ -161,18 +161,19 @@
             <div id="gesamtEinnahmen" style="font-weight: bold; font-size: 1.2em; margin-bottom: 10px;"></div>
             <canvas id="schulfestDiagramm"></canvas>
         </div>
-        <div class="diagrammContainer" id="artikelMengenTabelle">
-            <h3>Verkaufte Mengen pro Artikel</h3>
-            <table id="artikelMengenTabelle" style="margin: 0 auto; border-collapse: collapse; width: 50%;">
-          <thead>
+        <div class="diagrammContainerTabelle" id="artikelMengenTabelle">
+            <h3>Verkaufte Mengen & Einnahmen pro Artikel</h3>
+            <table id="artikelMengenTabelle" style="margin: 0 auto; border-collapse: collapse; width: 60%;">
+              <thead>
                 <tr>
                   <th style="border: 1px solid #ccc; padding: 5px;">Artikel</th>
                   <th style="border: 1px solid #ccc; padding: 5px;">Verkaufte Menge</th>
+                  <th style="border: 1px solid #ccc; padding: 5px;">Einnahmen (€)</th>
                 </tr>
               </thead>
-              <tbody>
-              </tbody>
+              <tbody></tbody>
             </table>
+
         </div>
         
         <div class="diagrammContainer">
@@ -460,23 +461,32 @@ fetch('https://raw.githubusercontent.com/Bni-byte/Kassensystem/main/schulfest.js
 
     // Menge pro Artikel summieren
 const mengenProArtikel = {};
+
 data.forEach(item => {
   const artikel = item.sache;
   const menge = parseInt(item.menge);
+  const preis = parseFloat(item.preis);
+
   if (!mengenProArtikel[artikel]) {
-    mengenProArtikel[artikel] = 0;
+    mengenProArtikel[artikel] = { menge: 0, einnahmen: 0 };
   }
-  mengenProArtikel[artikel] += menge;
+
+  mengenProArtikel[artikel].menge += menge;
+  mengenProArtikel[artikel].einnahmen += preis * menge;
 });
 
 // Tabelle füllen
 const tbody = document.querySelector("#artikelMengenTabelle tbody");
 tbody.innerHTML = ""; // vorher leeren
-for (const [artikel, menge] of Object.entries(mengenProArtikel)) {
+
+for (const artikel in mengenProArtikel) {
+  const { menge, einnahmen } = mengenProArtikel[artikel];
+
   const tr = document.createElement("tr");
   tr.innerHTML = `
     <td style="border: 1px solid #ccc; padding: 5px;">${artikel}</td>
     <td style="border: 1px solid #ccc; padding: 5px; text-align: right;">${menge}</td>
+    <td style="border: 1px solid #ccc; padding: 5px; text-align: right;">${einnahmen.toFixed(2).replace('.', ',')} €</td>
   `;
   tbody.appendChild(tr);
 }
