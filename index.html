@@ -82,6 +82,10 @@
             background-color: rgb(231, 231, 231);
             transition: 0.4s;
         }
+        #gesamtEinnahmen{
+            color: rgba(255, 99, 132, 1);
+            font-weight: bold;
+        }
         .spinner {
            width: 40px;
            height: 40px;
@@ -133,13 +137,13 @@
     }
     </style>
     
-    <!--<script type="text/javascript">
+    <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
-    </script>-->
+    </script>
 
 </head>
 <body>
@@ -150,6 +154,7 @@
 
         <div class="diagrammContainer">
             <h2>Schulfest Live-Einnahmen</h2>
+            <div id="gesamtEinnahmen" style="font-weight: bold; font-size: 1.2em; margin-bottom: 10px;"></div>
             <canvas id="schulfestDiagramm"></canvas>
         </div>
         
@@ -183,15 +188,21 @@
         let chartPosition;
         let chartPfandPosition;
 
+        let engSchr = 0;
+        let deSchr = 0;
+        let ziel = 0;
+
         fetch('kontostand.json')
                 .then(response => response.json())
                 .then(data => {
 
         //Kontostand
-        const engSchr = data.aktionen.reduce((total, aktion) => total + aktion.betrag, 0);
-        const deSchr = engSchr.toFixed(2).toString().split('.');
+        engSchr = data.aktionen.reduce((total, aktion) => total + aktion.betrag, 0);
+        deSchr = engSchr.toFixed(2).toString().split('.');
         document.getElementById("kontostand").innerText = deSchr.join(',') + " €";
         document.getElementById("geschaft").innerText = "geschafft: " + Math.round(engSchr/data.ziel*100)+"%";
+
+        ziel = data.ziel;
 
         function diagrammErstellen(){
             document.getElementById("diagramm").style.width = 0;
@@ -414,6 +425,21 @@ fetch('https://raw.githubusercontent.com/Bni-byte/Kassensystem/main/schulfest.js
 
     const labels = Object.keys(einnahmenProIntervall).sort();
     const werte = labels.map(label => einnahmenProIntervall[label]);
+
+    //Gesamtsumme berechnen
+    const gesamtsumme = Object.values(einnahmenProIntervall).reduce((sum, val) => sum + val, 0);
+    document.getElementById('gesamtEinnahmen').textContent = `Gesamteinnahmen: ${gesamtsumme.toFixed(2)} €`;
+
+    const gesamterKontostand = engSchr + gesamtsumme;
+    const kontostandGetrennt = gesamterKontostand.toFixed(2).toString().split('.');
+    document.getElementById("kontostand").innerText = kontostandGetrennt.join(',') + " €";
+    if(ziel && ziel > 0) {
+      const prozent = (gesamterKontostand / ziel) * 100;
+      document.getElementById("geschaft").innerText = "geschafft: " + Math.round(prozent) + "%";
+    } else {
+      document.getElementById("geschaft").innerText = "geschafft: -";
+    }
+
 
     new Chart(schulfestDiagramm, {
       type: 'bar',
