@@ -85,6 +85,7 @@
         }
         #geld{
             text-align: right;
+            max-width: 25px;
         }
         #gesamtEinnahmen{
             color: rgba(255, 99, 132, 1);
@@ -94,21 +95,23 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 10px;
-            background-color: #474747;
+            margin-bottom: 20px;
+            background-color: #d0d0d0;
             padding: 10px;
             border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
         .weiterleiter a{
             color: white;
             text-decoration: none;
             font-weight: bold;
+            font-size: 1rem;
         }
         .weiterleiter a:hover{
             text-decoration: underline;
         }
         .weiterleiter button{
-            background-color: #00aaff;
+            background-color: #0099ff;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -197,6 +200,10 @@
             background-color: rgb(84, 84, 84);
             transition: 0.4s;
         }
+        .weiterleiter{
+            background-color: #232323;
+            box-shadow: 0 5px 10px rgba(255, 255, 255, 0.5);
+        }
     }
 
     /* Responsive */
@@ -268,13 +275,13 @@
     }
     </style>
     
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
-    </script>
+    </script>-->
 
 </head>
 <body id="body">
@@ -357,7 +364,7 @@
                 <tr>
                     <th>Datum</th>
                     <th>Aktion</th>
-                    <th>Betrag</th>
+                    <th id="geld">Betrag</th>
                 </tr>
             </table>
         </div>
