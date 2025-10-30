@@ -33,6 +33,19 @@
       text-align: center;
       margin-bottom: 30px;
     }
+    
+    .gesamtsumme {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+    .gesamtsumme p {
+      margin: 0;
+      font-size: 28px;
+      color: #27ae60;
+    }
+
     .panel-container {
       display: flex;
       flex-direction: column;
@@ -56,6 +69,21 @@
       color: #333;
       width: 85%;
       transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .panel.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .panel.hide-up {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    .panel.hide-down {
+      opacity: 0;
+      transform: translateY(40px);
     }
     .panel:hover {
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -172,6 +200,7 @@
     const csvURL = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv`;
     
     const panelContainer = document.querySelector('.panel-container');
+    const header = document.querySelector('header');
 
     fetch(csvURL)
       .then(res => res.text())
@@ -248,9 +277,62 @@
           }
         });
 
+                // Summe aller Beträge berechnen
+        let summe = 0;
+        rows.slice(1).forEach(row => {
+          const betrag = row[3]; // 4. Spalte laut deiner Struktur
+          if (betrag && betrag.trim() !== '' && betrag.trim() !== '---') {
+            const zahl = parseFloat(
+              betrag
+                .replace('€', '')
+                .replace(',', '.')
+                .replace(/\s/g, '')
+            );
+            if (!isNaN(zahl)) summe += zahl;
+          }
+        });
+
+        // Summe anzeigen (unterhalb der Panels)
+        const summeDiv = document.createElement('div');
+        summeDiv.className = 'gesamtsumme';
+        summeDiv.innerHTML = `Aktuelle Gesamtsumme: <p>${summe.toFixed(2).replace('.', ',')} €</p>`;
+        header.appendChild(summeDiv);
+
       });
+
+
+      //Schwebe Effekt
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const el = entry.target;
+        
+          if (entry.isIntersecting) {
+            el.classList.add('show');
+            el.classList.remove('hide-up', 'hide-down');
+          } else {
+            const rect = el.getBoundingClientRect();
+            const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          
+            if (rect.top < 0) {
+              el.classList.remove('show');
+              el.classList.add('hide-up');
+            } else if (rect.bottom > viewportHeight) {
+              el.classList.remove('show');
+              el.classList.add('hide-down');
+            }
+          }
+        });
+      }, { threshold: 0.1 });
+
+      //Kontrolle ob alle Panels noch da
+      const observePanels = () => {
+        document.querySelectorAll('.panel').forEach(panel => observer.observe(panel));
+      };
+
+      setTimeout(observePanels, 1000);
+
+
       
   </script>
-
 </body>
 </html>
