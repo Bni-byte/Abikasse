@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1024">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Vorschau -->
   <meta property="og:title" content="A26 Abikasse">
   <meta property="og:description" content="Sponsoren der A26">
@@ -10,18 +10,240 @@
   <meta property="og:url" content="https://abikasse26.netlify.app/sponsoren.html">
   <meta property="og:type" content="A26 Abikasse">
   <meta name="twitter:card" content="A26 Abikasse">
-  
   <title>Sponsoren</title>
   <style>
-    body{
-      background-color: black;
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+    .container{
+      margin: 0 auto;
+      gap: 20px;
+      width: 100%;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .panel-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 15px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .panel {
+      display: flex;
+      flex-direction: row;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+      width: 85%;
+      transition: all 0.5s ease;
+    }
+    .panel:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+      transition: all 0.5s ease;
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+      text-align: left;
+    }
+    .unternehmen {
+      font-weight: bold;
+      width: 70%;
+      text-align: left;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .betrag {
+      color: #27ae60;
+      font-size: 16px;
+      width: 30%;
+      text-align: right;
+    }
+    .bemerkung {
+      font-style: italic;
+      color: #888;
+      font-size: 14px;
+      width: 100%;
+      text-align: left;
+      padding-left: 2px;
+    }
+    #zusage {
+      border-color: #27ae60;
+      background-color: #e8f8f5;
+    }
+    #vielleicht {
+      border-color: #f39c12;
+      background-color: #fcf8e8;
+    }
+    #absage {
+      border-color: #e74c3c;
+      background-color: #fce8e8;
+    }
+    #keine-antwort {
+      border-color: #bbb;
+      background-color: #f9f9f9;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+      }
+      .panel {
+        background-color: #1e1e1e;
+        border-color: #333;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        transition: all 0.5s ease;
+      }
+      .panel:hover {
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.7);
+        transform: translateY(-2px);
+        transition: all 0.5s ease;
+      }
+      .unternehmen {
+        color: #ffffff;
+      }
+      .betrag {
+        color: #50e48e;
+      }
+      .bemerkung {
+        color: #aaaaaa;
+      }
+      #zusage {
+        background-color: #134e48;
+        border-color: #27ae60;
+      }
+      #vielleicht {
+        background-color: #4e3b13;
+        border-color: #f39c12;
+      }
+      #absage {
+        background-color: #4e1313;
+        border-color: #e74c3c;
+      }
+      #keine-antwort {
+        background-color: #2a2a2a;
+        border-color: #555;
+      }
+      .unternehmen {
+        color: #ffffff;
+      }
+      .betrag {
+        color: #50e48e;
+      }
+      .bemerkung {
+        color: #aaaaaa;
+      }
     }
   </style>
 </head>
 <body>
-  <p>weiterleitung...</p>
+  <div class="container">
+    <header>
+      <h1>Sponsoren der A26</h1>
+    </header>
+    <div class="panel-container"></div>
+  </div>
+
   <script>
-    window.location.href = "https://docspace-vzve3o.onlyoffice.com/doceditor?share=eVRES2N6Qm5TSC9reCt1RjFvZ0lFbFJ1bzNEU2tGVUtRdk95Z0Jhb1VwRT0_Ijg5ZTFkMWU2LWU0OWUtNDlmNy1iMjE5LTdhODAzOGU3ODhjNSI&fileId=2406439&without_redirect=true";
+    const sheetID = "18cC_tD1gCvocRO81sRYX7K_CxsfAP4e7utvn_DuFQYE"; 
+    const csvURL = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv`;
+    
+    const panelContainer = document.querySelector('.panel-container');
+
+    fetch(csvURL)
+      .then(res => res.text())
+      .then(data => {
+        const rows = data.split('\n').map(row => row.split(','));
+
+        //Zusage Sponsoren
+        rows.slice(1).forEach(row => {
+          const [unternehmen, email, bemerkung, betrag, beschreibung] = row;
+          if (unternehmen) {
+            if (bemerkung == "Zusage") {
+              const div = document.createElement('div');
+              div.className = 'panel';
+              div.id = 'zusage';
+              div.innerHTML = `
+                <div class="info"><p class="unternehmen">${unternehmen}</p>
+                <p class="bemerkung">${beschreibung || ''}</p></div>
+                <p class="betrag">${betrag || '---'}</p>
+              `;
+              panelContainer.appendChild(div);
+            }
+          }
+        });
+
+        //Vielleicht Sponsoren
+        rows.slice(1).forEach(row => {
+          const [unternehmen, email, bemerkung, betrag, beschreibung] = row;
+          if (unternehmen) {
+            if (bemerkung == "Vielleicht") {
+              const div = document.createElement('div');
+              div.className = 'panel';
+              div.id = 'vielleicht';
+              div.innerHTML = `
+                <div class="info"><p class="unternehmen">${unternehmen}</p>
+                <p class="bemerkung">${bemerkung || ''}</p></div>
+                <p class="betrag">${betrag || '---'}</p>
+              `;
+              panelContainer.appendChild(div);
+            }
+          }
+        });
+
+        //Absage Sponsoren
+        rows.slice(1).forEach(row => {
+          const [unternehmen, email, bemerkung, betrag, beschreibung] = row;
+          if (unternehmen) {
+            if (bemerkung == "Absage") {
+              const div = document.createElement('div');
+              div.className = 'panel';
+              div.id = 'absage';
+              div.innerHTML = `
+                <div class="info"><p class="unternehmen">${unternehmen}</p>
+                <p class="bemerkung">${bemerkung || ''}</p></div>
+                <p class="betrag">${betrag || '---'}</p>
+              `;
+              panelContainer.appendChild(div);
+            }
+          }
+        });
+
+        //keine Antwort Sponsoren
+        rows.slice(1).forEach(row => {
+          const [unternehmen, email, bemerkung, betrag, beschreibung] = row;
+          if (unternehmen) {
+            if (bemerkung != "Absage" && bemerkung != "Vielleicht" && bemerkung != "Zusage") {
+              const div = document.createElement('div');
+              div.className = 'panel';
+              div.id = 'keine-antwort';
+              div.innerHTML = `
+                <div class="info"><p class="unternehmen">${unternehmen}</p>
+              `;
+              panelContainer.appendChild(div);
+            }
+          }
+        });
+
+      });
+      
   </script>
+
 </body>
 </html>
