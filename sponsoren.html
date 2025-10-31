@@ -297,7 +297,7 @@
         summeDiv.className = 'gesamtsumme';
         summeDiv.innerHTML = `Aktuelle Gesamtsumme: <p>${summe.toFixed(2).replace('.', ',')} €</p>`;
         header.appendChild(summeDiv);
-
+        observePanels();
       });
 
 
@@ -329,10 +329,6 @@
         document.querySelectorAll('.panel').forEach(panel => observer.observe(panel));
       };
 
-      setTimeout(observePanels, 1000);
-
-
-      
   </script>
 </body>
 </html>
