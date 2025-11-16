@@ -26,7 +26,8 @@
         {"datum": "Nov.25","aktion": "Herbstbasar", "betrag": 214.33},
         {"datum": "Nov.25","aktion": "Magda's Spende", "betrag": 10.00},
         {"datum": "Nov.25","aktion": "Bascettasterne", "betrag": 785.00},
-        {"datum": "Nov.25","aktion": "Pfand", "betrag": 20.27}
+        {"datum": "Nov.25","aktion": "Pfand", "betrag": 20.27},
+        {"datum": "Nov.25","aktion": "Sponsoren", "betrag": 210.00}
     ]
   }
 
