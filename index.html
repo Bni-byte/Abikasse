@@ -148,33 +148,6 @@
            height: auto;
          }
 
-        .diagrammContainer iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            overflow: hidden;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .bascettastern-container{
-            position: relative;
-            width: 100%;
-            height: 200px;
-            margin: 20px auto;
-            padding-bottom: 80px;
-            padding-top: 10px;
-        }
-        .bascettastern-container p{
-            color: #888;
-            margin-top: -10px;
-            text-align: center;
-            font-size: 1rem;
-        }
-
         iframe::-webkit-scrollbar {
             display: none;
         }
@@ -184,6 +157,33 @@
              transform: rotate(360deg);
            }
          }
+
+    /*Infos*/
+    .info{
+        text-align: left;
+        margin-top: 20px;
+        padding: 10px;
+        border: solid gray 1px;
+        border-radius: 10px;
+        background-color: #e0e0e0;
+    }
+    .infoList{
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+
+    /*Bascettasterne*/
+    #bascettastern-container p{
+        color: #888;
+        margin-top: -10px;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    #bascettastern-container strong{
+        color: #FF8C00;
+    }
+
 
     /*Dark-Mode*/
     @media (prefers-color-scheme: dark) {
@@ -221,6 +221,11 @@
             background-color: #232323;
             box-shadow: 0 5px 10px rgba(255, 255, 255, 0.5);
         }
+        .info{
+            background-color: #383838;
+            border: solid rgb(84, 84, 84) 1px;
+        }
+
     }
 
     /* Responsive */
@@ -367,10 +372,20 @@
             <button><a href="https://abikasse26.netlify.app/sponsoren.html">Sponsoren</a></button>
         </div>
 
-        <div class="bascettastern-container">
-            <h2>Bascettastern-Aktion</h2>
-            <p>Verkaufzahlen und mehr in Kürze!</p>
-            <div class="spinner"></div>
+        <div class="info">
+            <h2>Information zu Schnuppertag</h2>
+            <ul class="infoList">
+                <li>9 Uhr Beginn</li>
+                <li>zwischen 10:15 - 10:30 Verkaufsbeginn</li>
+                <li>Ende gegen 13 Uhr</li>
+            </ul>
+        </div>
+
+        <div class="diagrammContainer" id ="bascettastern-container">
+            <h2>Bascetta-Aktion</h2>
+            <p class="anzahl"></p>
+            <p class="summe"></p>
+            <canvas class="canvas" id="diagrammBascetta"></canvas>
         </div>
 
         <div class="diagrammContainer">
@@ -518,7 +533,7 @@
 
 
         //Diagramm Pfand
-        function pfandDiagrammErstellen(){
+    function pfandDiagrammErstellen(){
     fetch("pfand.csv")
         .then(response => response.text())
         .then(data => {
@@ -604,6 +619,115 @@
         });
 }
 
+//Bascettasterne Diagramm
+let chart;
+
+async function loadSheet() {
+  const sheetId = "1_uqyRuyqHhOBEK76Wr3pWatCmAwTP7tn8WJv9Hh55D8";
+  const gid = 0;  
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}&nocache=${Date.now()}`;
+
+  const res = await fetch(url);
+  const csv = await res.text();
+  const rows = csv.trim().split("\n").slice(1).map(r => r.split(","));
+
+  const sums = {};
+  let anzahl = 0;
+  let summe = 0;
+  rows.forEach(r => {
+    if(r[4] == "im Web"){
+        const date = r[0];
+        const priceStr = r[2].replace("€","").trim();
+        const price = parseFloat(priceStr);
+        if (!sums[date]) sums[date] = 0;
+        sums[date] += price;
+        anzahl += 1;
+        summe += price;
+    }
+  });
+
+    document.querySelector(".anzahl").innerHTML = `Verkaufte Bascettasterne: <strong>${anzahl}</strong>`;
+    document.querySelector(".summe").innerHTML = `Gesamtsumme: <strong>${summe.toFixed(2).replace('.', ',')} €</strong>`;
+
+  const sortedDates = Object.keys(sums).sort((a, b) => new Date(a) - new Date(b));
+
+  let runningTotal = 0;
+  const cumulativeValues = sortedDates.map(date => {
+    runningTotal += sums[date];
+    return runningTotal;
+  });
+
+  drawChart(sortedDates, cumulativeValues);
+}
+
+function drawChart(labels, values) {
+  const ctx = document.getElementById("diagrammBascetta").getContext("2d");
+
+  if (chart) chart.destroy(); // falls aktualisiert, alten Chart löschen
+
+  chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Bascettasterne",
+        data: values,
+        borderColor: darkMode ? "#FFA500" : "#FF8C00",
+        backgroundColor: "rgba(255, 140, 0, 0.15)",
+        borderWidth: 2,
+        pointRadius: 4,
+        fill: false,
+        tension: 0.2
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          type: "time",
+          ticks: {
+            color: darkMode ? "#ffffff" : "#000000"
+          },
+          grid: {
+            color: darkMode ? "#303030" : "#C0C0C0"
+          },
+          time: {
+            parser: "dd.MM.yyyy",
+            tooltipFormat: "dd.MM.yyyy",
+            displayFormats: { day: "dd.MM.yyyy" }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: darkMode ? "#ffffff" : "#000000",
+            callback: function(value) {
+              return value + " €";
+            }
+          },
+          grid: {
+              color: darkMode ? "#303030" : "#C0C0C0"
+          }
+        }
+      },
+        plugins: {
+            legend: {
+            display: false
+            },
+            tooltip: {
+            displayColors: false,
+            callbacks: {
+                label: function(tooltipItem) {
+                return tooltipItem.formattedValue + ' €';
+                }
+            }
+        }
+        }
+    }
+  });
+}
+
+
         //Tabelle
         function tabelleErstellen(){
         const tabelle = document.getElementById("tabelle");
@@ -620,6 +744,8 @@
         pfandDiagrammErstellen();
         diagrammErstellen();
         tabelleErstellen();
+        loadSheet();
+
 
         let lastWidth = window.innerWidth;
         window.addEventListener('resize', function() {
