@@ -365,7 +365,7 @@
         <h1>Abikasse A26</h1>
         <p id="kontostand" class="laden">Lade Kontostand...</p>
         <p id="geschaft" class="laden"></p>
-        <!--<canvas id="konfetti"></canvas>-->
+        <canvas id="konfetti"></canvas>
 
         <div class="weiterleiter">
             <button><a href="https://a26-bascettasterne.netlify.app">Bascettasterne</a></button>
@@ -433,7 +433,7 @@
         document.getElementById("geschaft").innerText = "geschafft: " + Math.round(engSchr/data.ziel*100)+"%";
 
         //Konfetti
-        /*setTimeout(() => {
+        setTimeout(() => {
             const geld = document.getElementById("kontostand");
             const rect = geld.getBoundingClientRect();
             const x = (rect.left + rect.right) / 2 / window.innerWidth;
@@ -447,7 +447,7 @@
                 gravity: 0.8,
                 origin: { x, y }
             });
-        }, 4000);*/
+        }, 4000);
 
         ziel = data.ziel;
 
@@ -758,4 +758,5 @@ function drawChart(labels, values) {
     .catch(error => console.error('Fehler beim Laden der JSON-Datei:', error));
     </script>
 </body>
+
 </html>
