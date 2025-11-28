@@ -427,9 +427,9 @@
 
         //Kontostand
         engSchr = data.aktionen.reduce((total, aktion) => total + aktion.betrag, 0);
-        deSchr = engSchr.toFixed(2).toString().split('.');
-        document.getElementById("kontostand").innerText = deSchr.join(',') + " €";
-        document.getElementById("geschaft").innerText = "geschafft: " + Math.round(engSchr/data.ziel*100)+"%";
+        document.getElementById("kontostand").innerText = engSchr.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+        document.getElementById("geschaft").innerText = "geschafft: " + Math.round(engSchr / data.ziel * 100) + "%";
+
 
         //Konfetti
         /*setTimeout(() => {
