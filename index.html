@@ -365,21 +365,20 @@
         <h1>Abikasse A26</h1>
         <p id="kontostand" class="laden">Lade Kontostand...</p>
         <p id="geschaft" class="laden"></p>
-        <canvas id="konfetti"></canvas>
+        <!--<canvas id="konfetti"></canvas>-->
 
         <div class="weiterleiter">
             <button><a href="https://a26-bascettasterne.netlify.app">Bascettasterne</a></button>
             <button><a href="https://abikasse26.netlify.app/sponsoren.html">Sponsoren</a></button>
         </div>
 
-        <!--<div class="info">
-            <h2>Information zu Schnuppertag</h2>
+        <div class="info">
+            <h2>Bachadvent</h2>
             <ul class="infoList">
-                <li>9 Uhr Beginn</li>
-                <li>zwischen 10:15 - 10:30 Verkaufsbeginn</li>
-                <li>Ende gegen 13 Uhr</li>
+                <li>Bachadvent-App -> wenn man Ort zum Spendensammeln nicht findet</li>
+                <li>offizielle Ergebnisse am Sonntag Abend</li>
             </ul>
-        </div>-->
+        </div>
 
         <div class="diagrammContainer" id ="bascettastern-container">
             <h2>Bascetta-Aktion</h2>
@@ -433,7 +432,7 @@
         document.getElementById("geschaft").innerText = "geschafft: " + Math.round(engSchr/data.ziel*100)+"%";
 
         //Konfetti
-        setTimeout(() => {
+        /*setTimeout(() => {
             const geld = document.getElementById("kontostand");
             const rect = geld.getBoundingClientRect();
             const x = (rect.left + rect.right) / 2 / window.innerWidth;
@@ -447,7 +446,7 @@
                 gravity: 0.8,
                 origin: { x, y }
             });
-        }, 4000);
+        }, 4000);*/
 
         ziel = data.ziel;
 
@@ -758,6 +757,4 @@ function drawChart(labels, values) {
     .catch(error => console.error('Fehler beim Laden der JSON-Datei:', error));
     </script>
 </body>
-
 </html>
-
