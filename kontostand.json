@@ -25,7 +25,7 @@
         {"datum": "Okt.25","aktion": "Bascettasterne", "betrag": 20.00},
         {"datum": "Nov.25","aktion": "Herbstbasar", "betrag": 214.33},
         {"datum": "Nov.25","aktion": "Magda's Spende", "betrag": 10.00},
-        {"datum": "Nov.25","aktion": "Bascettasterne", "betrag": 3302.40},
+        {"datum": "Nov.25","aktion": "Bascettasterne", "betrag": 4322.40},
         {"datum": "Nov.25","aktion": "Pfand", "betrag": 48.35},
         {"datum": "Nov.25","aktion": "Sponsoren", "betrag": 210.00},
         {"datum": "Nov.25","aktion": "Einnahmen Schnuppertag", "betrag": 1017.25},
@@ -34,5 +34,6 @@
         {"datum": "Nov.25","aktion": "Louis Bachadvent Konzert", "betrag": 80.00}
     ]
   }
+
 
 
