@@ -29,6 +29,8 @@
         {"datum": "Nov.25","aktion": "Pfand", "betrag": 48.35},
         {"datum": "Nov.25","aktion": "Sponsoren", "betrag": 210.00},
         {"datum": "Nov.25","aktion": "Einnahmen Schnuppertag", "betrag": 1017.25},
-        {"datum": "Nov.25","aktion": "Ausgaben Schnuppertag", "betrag": -133.50}
+        {"datum": "Nov.25","aktion": "Ausgaben Schnuppertag", "betrag": -133.50},
+        {"datum": "Nov.25","aktion": "Louis Bachadvent Konzert", "betrag": 80.00}
     ]
   }
+
