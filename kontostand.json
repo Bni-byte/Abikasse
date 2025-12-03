@@ -33,7 +33,8 @@
         {"datum": "Nov.25","aktion": "Ausgaben Schnuppertag", "betrag": -133.50},
         {"datum": "Nov.25","aktion": "Bachadvent Rathaus", "betrag": 2570.05},
         {"datum": "Nov.25","aktion": "Louis Bachadvent Konzert", "betrag": 80.00},
-        {"datum": "Nov.25","aktion": "Bachadvent Spenden (grobe Schätzung)", "betrag": 2550.00}
+        {"datum": "Nov.25","aktion": "Bachadvent Spenden (grobe Schätzung)", "betrag": 2550.00},
+        {"datum": "Dez.25","aktion": "Spenden", "betrag": 450.00}
     ]
   }
 
