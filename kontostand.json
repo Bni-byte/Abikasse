@@ -35,7 +35,8 @@
         {"datum": "Nov.25","aktion": "Louis Bachadvent Konzert", "betrag": 80.00},
         {"datum": "Nov.25","aktion": "Bachadvent Spenden (grobe Schätzung)", "betrag": 2550.00},
         {"datum": "Dez.25","aktion": "Spenden Czaja", "betrag": 450.00},
-        {"datum": "Dez.25","aktion": "Einnahmen B-Sterne", "betrag": 230.00}
+        {"datum": "Dez.25","aktion": "Einnahmen B-Sterne", "betrag": 230.00},
+        {"datum": "Dez.25","aktion": "Pfand", "betrag": 20.06}
     ]
   }
 
