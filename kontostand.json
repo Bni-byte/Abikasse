@@ -22,10 +22,10 @@
         {"datum": "Sep.25","aktion": "Ausgaben Sportfest", "betrag": -82.00},
         {"datum": "Sep.25","aktion": "Einnahmen Sportfest", "betrag": 739.78},
         {"datum": "Okt.25","aktion": "Pfand", "betrag": 17.74},
-        {"datum": "Okt.25","aktion": "Bascettasterne", "betrag": 20.00},
+        {"datum": "Okt.25","aktion": "Einnahmen B-Sterne", "betrag": 20.00},
         {"datum": "Nov.25","aktion": "Herbstbasar", "betrag": 214.33},
         {"datum": "Nov.25","aktion": "Magda's Spende", "betrag": 10.00},
-        {"datum": "Nov.25","aktion": "Einnahmen B-Sterne", "betrag": 5252.40},
+        {"datum": "Nov.25","aktion": "Einnahmen B-Sterne", "betrag": 5172.40},
         {"datum": "Nov.25","aktion": "Ausgaben B-Sterne", "betrag": -800.00},
         {"datum": "Nov.25","aktion": "Pfand", "betrag": 48.35},
         {"datum": "Nov.25","aktion": "Sponsoren", "betrag": 210.00},
@@ -35,10 +35,11 @@
         {"datum": "Nov.25","aktion": "Louis Bachadvent Konzert", "betrag": 80.00},
         {"datum": "Nov.25","aktion": "Bachadvent Spenden", "betrag": 2490.00},
         {"datum": "Dez.25","aktion": "Spenden Czaja", "betrag": 450.00},
-        {"datum": "Dez.25","aktion": "Einnahmen B-Sterne", "betrag": 230.00},
+        {"datum": "Dez.25","aktion": "Einnahmen B-Sterne", "betrag": 440.00},
         {"datum": "Dez.25","aktion": "Pfand", "betrag": 20.06}
     ]
   }
+
 
 
 
