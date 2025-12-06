@@ -28,7 +28,8 @@
         {"datum": "Nov.25","aktion": "Einnahmen B-Sterne", "betrag": 5102.40},
         {"datum": "Nov.25","aktion": "Ausgaben B-Sterne", "betrag": -800.00},
         {"datum": "Nov.25","aktion": "Pfand", "betrag": 48.35},
-        {"datum": "Nov.25","aktion": "Sponsoren", "betrag": 210.00},
+        {"datum": "Nov.25","aktion": "Spende Laesecke", "betrag": 150.00},
+        {"datum": "Nov.25","aktion": "Spende Hollidayland", "betrag": 60.00},
         {"datum": "Nov.25","aktion": "Einnahmen Schnuppertag", "betrag": 1017.25},
         {"datum": "Nov.25","aktion": "Ausgaben Schnuppertag", "betrag": -133.50},
         {"datum": "Nov.25","aktion": "Bachadvent Rathaus", "betrag": 2570.05},
@@ -39,6 +40,7 @@
         {"datum": "Dez.25","aktion": "Pfand", "betrag": 20.06}
     ]
   }
+
 
 
 
