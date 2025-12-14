@@ -25,7 +25,7 @@
         {"datum": "Okt.25","aktion": "Einnahmen B-Sterne", "betrag": 20.00},
         {"datum": "Nov.25","aktion": "Herbstbasar", "betrag": 214.33},
         {"datum": "Nov.25","aktion": "Magda's Spende", "betrag": 10.00},
-        {"datum": "Nov.25","aktion": "Einnahmen B-Sterne", "betrag": 5102.40},
+        {"datum": "Nov.25","aktion": "Einnahmen B-Sterne", "betrag": 5042.40},
         {"datum": "Nov.25","aktion": "Ausgaben B-Sterne", "betrag": -800.00},
         {"datum": "Nov.25","aktion": "Pfand", "betrag": 48.35},
         {"datum": "Nov.25","aktion": "Spende Laesecke", "betrag": 150.00},
@@ -41,6 +41,7 @@
         {"datum": "Dez.25","aktion": "Leni's Spende", "betrag": 10.00}
     ]
   }
+
 
 
 
