@@ -38,7 +38,8 @@
         {"datum": "Dez.25","aktion": "Spenden Czaja", "betrag": 450.00},
         {"datum": "Dez.25","aktion": "Einnahmen B-Sterne", "betrag": 2435.00},
         {"datum": "Dez.25","aktion": "Pfand", "betrag": 20.06},
-        {"datum": "Dez.25","aktion": "Leni's Spende", "betrag": 10.00}
+        {"datum": "Dez.25","aktion": "Leni's Spende", "betrag": 10.00},
+        {"datum": "Dez.25","aktion": "Winterbasar", "betrag": 184.30}
     ]
   }
 
