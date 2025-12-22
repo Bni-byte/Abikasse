@@ -185,6 +185,14 @@
         color: #FF8C00;
     }
 
+    /*Einnahmen Diagramm*/
+    #einnahmenContainer{
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
 
     /*Dark-Mode*/
     @media (prefers-color-scheme: dark) {
@@ -298,13 +306,13 @@
     }
     </style>
     
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
-    </script>
+    </script>-->
 
 </head>
 <body id="body">
@@ -358,8 +366,8 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 500);
-        }, 3000);
+            }, 1);//500
+        }, 1);//3000
     </script>
 
     <div class="container">
@@ -376,7 +384,8 @@
         <!--<div class="info">
             <h2>Bachadvent</h2>
             <ul class="infoList">
-                <li>offizielle Ergebnisse um ca. 21:10Uhr</li>
+                <li>Bachadvent-App -> wenn man Ort zum Spendensammeln nicht findet</li>
+                <li>offizielle Ergebnisse am Sonntag Abend</li>
             </ul>
         </div>-->
 
@@ -386,15 +395,16 @@
             <p class="summe"></p>
             <canvas class="canvas" id="diagrammBascetta"></canvas>
         </div>
+        
 
-        <div class="diagrammContainer">
+        <!--<div class="diagrammContainer">
             <h2>Pfand-Aktion</h2>
             <canvas class="canvas" id="diagrammPfand"></canvas>
-        </div>
+        </div>-->
         <r>
-        <div class="diagrammContainer">
+        <div class="diagrammContainer" id="einnahmenContainer">
             <h2>Einnahmen</h2>
-            <canvas class="canvas" id="diagramm"></canvas>
+            <canvas class="canvas" id="diagrammEinnahmen"></canvas>
         </div>
         <div id="tabellenContainer">
             <table id="tabelle">
@@ -450,7 +460,7 @@
 
         ziel = data.ziel;
 
-        function diagrammErstellen(){
+        /*function diagrammErstellen(){
             document.getElementById("diagramm").style.width = 0;
             document.getElementById("diagramm").style.height = 0;
             let breite = window.innerWidth;
@@ -528,10 +538,10 @@
                             }
                         }
                     });
-        }
+        }*/
 
 
-        //Diagramm Pfand
+    //Diagramm Pfand ##############################################################
     function pfandDiagrammErstellen(){
     fetch("pfand.csv")
         .then(response => response.text())
@@ -618,7 +628,7 @@
         });
 }
 
-//Bascettasterne Diagramm
+//Bascettasterne Diagramm ##############################################################
 let chart;
 
 async function loadSheet() {
@@ -740,8 +750,58 @@ function drawChart(labels, values) {
         });
         }
 
-        pfandDiagrammErstellen();
-        diagrammErstellen();
+function kreisdiagrammErstellen() {
+    const labels = [];
+    const values = [];
+
+    let sonstigeSumme = 0;
+
+    data.aktionen.forEach(aktion => {
+        if (aktion.betrag < 400) {
+            sonstigeSumme += aktion.betrag;
+        } else {
+            labels.push(aktion.aktion);
+            values.push(aktion.betrag);
+        }
+    });
+
+    // Sonstige nur hinzufügen, wenn es auch etwas gibt
+    if (sonstigeSumme > 0) {
+        labels.push("Sonstige");
+        values.push(sonstigeSumme);
+    }
+
+    const ctx = document.getElementById("diagrammEinnahmen").getContext("2d");
+
+    new Chart(ctx, {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ": " +
+                                context.parsed.toFixed(2).replace('.', ',') + " €";
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+        //pfandDiagrammErstellen();
+        //diagrammErstellen();
+        kreisdiagrammErstellen();
         tabelleErstellen();
         loadSheet();
 
@@ -757,8 +817,4 @@ function drawChart(labels, values) {
     .catch(error => console.error('Fehler beim Laden der JSON-Datei:', error));
     </script>
 </body>
-
 </html>
-
-
-
