@@ -296,6 +296,15 @@
             fill: white;
         }
     }
+
+    /*Silvester-Edition*/
+    iframe {
+        width: 100%;
+        height: 100vh;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
     </style>
     
     <script type="text/javascript">
@@ -310,7 +319,7 @@
 <body id="body">
 
 <div id="logo">
-        <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+        <!--<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
          width="756.000000pt" height="731.000000pt" viewBox="0 0 756.000000 731.000000"
          preserveAspectRatio="xMidYMid meet">
         <g transform="translate(0.000000,731.000000) scale(0.100000,-0.100000)" class="a26Zeichen fill">
@@ -343,7 +352,10 @@
         -144 16 -255 97 -320 234 -56 118 -100 365 -100 567 l0 78 41 26 c80 50 222
         103 344 128 50 10 254 5 301 -8z"/>
         </g>
-        </svg>
+        </svg>-->
+
+        <!--Silvester-Edition-->
+        <iframe src="https://a26-abikassen-feuerwerk.netlify.app/"></iframe>
     </div>
 
     <script>
@@ -358,8 +370,8 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 1);//500
-        }, 1);//3000
+            }, 50);//500
+        }, 8000);//3000
     </script>
 
     <div class="container">
@@ -368,10 +380,10 @@
         <p id="geschaft" class="laden"></p>
         <!--<canvas id="konfetti"></canvas>-->
 
-        <div class="weiterleiter">
+        <!--<div class="weiterleiter">
             <button><a href="https://a26-bascettasterne.netlify.app">Bascettasterne</a></button>
             <button><a href="https://abikasse26.netlify.app/sponsoren.html">Sponsoren</a></button>
-        </div>
+        </div>-->
 
         <!--<div class="info">
             <h2>Bachadvent</h2>
