@@ -305,6 +305,19 @@
         margin: 0;
         padding: 0;
     }
+    #weiter {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        background-color: #0099ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 10;
+    }
     </style>
     
     <script type="text/javascript">
@@ -356,6 +369,7 @@
 
         <!--Silvester-Edition-->
         <iframe src="https://a26-abikassen-feuerwerk.netlify.app/"></iframe>
+        <button id="weiter">weiter</button>
     </div>
 
     <script>
@@ -371,7 +385,21 @@
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
             }, 50);//500
-        }, 8000);//3000
+        }, 30000);//3000
+
+        document.getElementById("weiter").addEventListener("click", () => {
+            const logo = document.getElementById("logo");
+            logo.classList.add("ausblenden");
+        
+            setTimeout(() => {
+                logo.style.display = "none";
+                document.querySelector(".container").style.display = "block";
+                document.getElementsByTagName('html')[0].classList.add("html");
+                document.getElementsByTagName('body')[0].classList.add("body");
+                document.getElementsByTagName('html')[0].removeAttribute('id');
+                document.getElementsByTagName('body')[0].removeAttribute('id');
+            }, 50);//500
+        });
     </script>
 
     <div class="container">
