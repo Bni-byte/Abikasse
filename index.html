@@ -350,13 +350,13 @@
     }
     </style>
     
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
-    </script>
+    </script>-->
 
 </head>
 <body id="body">
@@ -515,17 +515,14 @@ const bascettasterne = summe('Bascettasterne');
 const bachadvent = summe('Bachadvent');
 const rest = engSchr - bascettasterne - bachadvent;
 
-const outerLabels = ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Basare', 'Schnuppertag', 'Sonstiges', 'Spenden', 'Sportfest', 'Pfand'];
-const innerLabels = ['Bascettasterne', 'Bachadvent', 'Rest'];
-
 const ctx = document.getElementById('diagramm').getContext('2d');
 diagramm = new Chart(ctx, {
     type: 'doughnut',
     data: {
+        labels: ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Basare', 'Schnuppertag', 'Sonstiges', 'Spenden', 'Sportfest', 'Pfand'],
         datasets: [
             {
                 label: 'Aktionen',
-                labels: outerLabels,
                 data: [
                     bascettasterne,
                     bachadvent,
@@ -549,7 +546,6 @@ diagramm = new Chart(ctx, {
             },
             {
                 label: 'Innerer Ring',
-                labels: innerLabels,
                 data: [bascettasterne, bachadvent, rest],
                 backgroundColor: darkMode ? ['#2563eb','#ea580c','#52525b'] : ['rgba(54,162,235,1)','rgba(255,159,64,1)','rgba(150,150,150,0.9)'],
                 borderWidth: 0,
@@ -570,28 +566,25 @@ diagramm = new Chart(ctx, {
                     label: ctx => {
                         const ds = ctx.dataset;
                         const val = ctx.raw;
-                        const lbl = ds.labels ? ds.labels[ctx.dataIndex] : ctx.label; // Dataset-spezifische Labels
-                        if(ctx.datasetIndex===1){ 
+                        if(ctx.datasetIndex===1){
                             const total = ds.data.reduce((a,b)=>a+b,0);
-                            return `${lbl}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} € (${(val/total*100).toFixed(1)}%)`;
-                        } else { 
-                            return `${lbl}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} €`;
+                            return `${ctx.chart.data.labels[ctx.dataIndex]}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} € (${(val/total*100).toFixed(1)}%)`;
                         }
+                        return `${ctx.label}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} €`;
                     }
                 }
             },
             datalabels: {
-                display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ctx.datasetIndex===2 && ctx.dataIndex<3)),
-                color: '#fff',
+                display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ( ctx.datasetIndex===2 && ctx.dataIndex<3))),
+                color: ctx => darkMode ? '#fff' : '#000',
                 font: { weight: '700', size: 12 },
                 formatter: (val,ctx) => {
                     const ds = ctx.dataset;
-                    const lbl = ds.labels ? ds.labels[ctx.dataIndex] : '';
                     if(ctx.datasetIndex===1){
                         const total = ds.data.reduce((a,b)=>a+b,0);
                         return Math.round(val/total*100)+'%';
                     } else if(ctx.datasetIndex===0 && ctx.dataIndex<3){
-                        return lbl; // Bascettasterne/Bachadvent außen
+                        return ctx.chart.data.labels[ctx.dataIndex];
                     }
                     return '';
                 },
@@ -602,6 +595,9 @@ diagramm = new Chart(ctx, {
     },
     plugins: [ChartDataLabels]
 });
+
+
+
 
         //Tabelle
         function tabelleErstellen(){
