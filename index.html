@@ -26,6 +26,30 @@
             margin: 0;
             height: 100%;
         }
+        #header {
+            position: sticky;
+            top: 0;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            mask-image: linear-gradient(
+                to bottom,
+                rgba(0,0,0,1) 0%,
+                rgba(0,0,0,1) 50%,
+                rgba(0,0,0,1) 70%,
+                rgba(0,0,0,0.1) 100%
+            );
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                rgba(0,0,0,1) 0%,
+                rgba(0,0,0,1) 50%,
+                rgba(0,0,0,1) 70%,
+                rgba(0,0,0,0.1) 100%
+            );
+        }
+
         .container{
             display: none;
             max-width: 700px;
@@ -45,6 +69,9 @@
             margin-bottom: 20px;
         }
         .diagrammContainer{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
             width: 100%;
             height: 400px;
@@ -191,6 +218,9 @@
         .body {
             background-color: #282828;
             color: rgb(255, 255, 255);
+        }
+        #header{
+            background-color: #121212dc;
         }
         .container{
             background-color: #121212;
@@ -384,8 +414,8 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 50);//500
-        }, 30000);//3000
+            }, 500);//500
+        }, 3000);//3000
 
         document.getElementById("weiter").addEventListener("click", () => {
             const logo = document.getElementById("logo");
@@ -398,12 +428,12 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 50);//500
+            }, 500);//500
         });
     </script>
 
     <div class="container">
-        <h1>Abikasse A26</h1>
+        <h1 id="header">Abikasse A26</h1>
         <p id="kontostand" class="laden">Lade Kontostand...</p>
         <p id="geschaft" class="laden"></p>
         <!--<canvas id="konfetti"></canvas>-->
@@ -421,23 +451,11 @@
             </ul>
         </div>-->
 
-        <div class="diagrammContainer" id ="bascettastern-container">
-            <h2>Bascetta-Aktion</h2>
-            <p class="anzahl"></p>
-            <p class="summe"></p>
-            <canvas class="canvas" id="diagrammBascetta"></canvas>
-        </div>
-        
-
         <div class="diagrammContainer">
-            <h2>Pfand-Aktion</h2>
-            <canvas class="canvas" id="diagrammPfand"></canvas>
-        </div>
-        <r>
-        <div class="diagrammContainer">
-            <h2>Einnahmen</h2>
+            <h2>Aktionen</h2>
             <canvas class="canvas" id="diagramm"></canvas>
         </div>
+
         <div id="tabellenContainer">
             <table id="tabelle">
                 <tr>
@@ -450,6 +468,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
     <script>
@@ -490,284 +509,99 @@
             });
         }, 4000);*/
 
-        ziel = data.ziel;
+// Aktionen-Diagramm
+const summe = ob => data.aktionen.filter(a => a.ob === ob).reduce((t,a) => t + a.betrag, 0);
+const bascettasterne = summe('Bascettasterne');
+const bachadvent = summe('Bachadvent');
+const rest = engSchr - bascettasterne - bachadvent;
 
-        function diagrammErstellen(){
-            document.getElementById("diagramm").style.width = 0;
-            document.getElementById("diagramm").style.height = 0;
-            let breite = window.innerWidth;
-            let horizontal = false;
-            let achse = "y";
-            let andereAchse = "x";
+const outerLabels = ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Basare', 'Schnuppertag', 'Sonstiges', 'Spenden', 'Sportfest', 'Pfand'];
+const innerLabels = ['Bascettasterne', 'Bachadvent', 'Rest'];
 
-                    //Diagramm
-                    const monatsSummen = {};
-                        data.aktionen.forEach(({ datum, betrag }) => {
-                        monatsSummen[datum] = (monatsSummen[datum] || 0) + betrag;
-                    });
-
-                    const labels = Object.keys(monatsSummen);
-                    const werte = Object.values(monatsSummen);
-
-                    if (breite < 600) {
-                        horizontal = true;
-                        achse = "x";
-                        andereAchse = "y";
-                    }
-
-                    let chart = document.getElementById('diagramm').getContext('2d');
-                    
-                    if (chartPosition) {
-                        chartPosition.destroy();
-                    }
-                    
-                    chartPosition = new Chart(chart, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Einnahmen',
-                                data: werte,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            indexAxis: horizontal ? 'y' : 'x',
-                            scales: {
-                                [achse]: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        color: darkMode ? "#ffffff" : "#000000",
-                                        callback: function(value) {
-                                            return value + ' €';
-                                        }
-                                    },
-                                    grid: {
-                                        color: darkMode ? "#303030" : "#C0C0C0"
-                                    }
-                                },
-                                [andereAchse]: {
-                                    ticks: {
-                                        color: darkMode ? "#ffffff" : "#000000"
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                },
-                                tooltip: {
-                                    displayColors: false,
-                                    callbacks: {
-                                    label: function(tooltipItem) {
-                                        return tooltipItem.formattedValue + ' €';
-                                      }
-                                    }
-                                }
-                            }
-                        }
-                    });
-        }
-
-
-    //Diagramm Pfand ##############################################################
-    function pfandDiagrammErstellen(){
-    fetch("pfand.csv")
-        .then(response => response.text())
-        .then(data => {
-            let zeilen = data.split("\n");
-            let datenPunkte = [];
-            let summe = 0;
-
-            for (let i = 1; i < zeilen.length; i++) {
-                if(zeilen[i].trim() === "") continue;
-                let teile = zeilen[i].split(";");
-                let datumStr = teile[0].trim();
-                let betrag = parseFloat(teile[1]);
-
-                let datumTeile = datumStr.split(".");
-                let datum = new Date(datumTeile[2], datumTeile[1] - 1, datumTeile[0]);
-
-                if (!isNaN(betrag) && !isNaN(datum.getTime())) {
-                    summe += betrag;
-                    datenPunkte.push({ x: datum, y: summe });
-                }
-            }
-
-            if (chartPfandPosition) {
-                chartPfandPosition.destroy();
-            }
-            // Diagramm erstellen
-            chartPfandPosition = new Chart(document.getElementById("diagrammPfand").getContext('2d'), {
-                type: "line",
-                data: {
-                    datasets: [{
-                        label: "Pfand",
-                        data: datenPunkte,
-                        borderColor: darkMode ? "#0FA4FA" : "#025DB9",
-                        backgroundColor: "rgba(3, 140, 219, 0.15)",
-                        fill: true
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            ticks: {
-                                color: darkMode ? "#ffffff" : "#000000",
-                                callback: function(value) {
-                                    return value + " €";
-                                }
-                            },
-                            grid: {
-                                color: darkMode ? "#303030" : "#C0C0C0"
-                            }
-                        },
-                        x: {
-                            type: "time", // Zeitachse
-                            time: {
-                                unit: "day",
-                                displayFormats: {
-                                    day: 'dd.MM.yyyy'
-                                },
-                                tooltipFormat: 'dd.MM.yyyy'
-                            },
-                            ticks: {
-                                color: darkMode ? "#ffffff" : "#000000"
-                            },
-                            grid: {
-                                color: darkMode ? "#303030" : "#C0C0C0"
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            displayColors: false,
-                            callbacks: {
-                              label: function(tooltipItem) {
-                                return tooltipItem.formattedValue + ' €';
-                              }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-}
-
-//Bascettasterne Diagramm ##############################################################
-let chart;
-
-async function loadSheet() {
-  const sheetId = "1_uqyRuyqHhOBEK76Wr3pWatCmAwTP7tn8WJv9Hh55D8";
-  const gid = 0;  
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}&nocache=${Date.now()}`;
-
-  const res = await fetch(url);
-  const csv = await res.text();
-  const rows = csv.trim().split("\n").slice(1).map(r => r.split(","));
-
-  const sums = {};
-  let anzahl = 0;
-  let summe = 0;
-  rows.forEach(r => {
-    if(r[4] == "im Web"){
-        const date = r[0];
-        const priceStr = r[2].replace("€","").trim();
-        const price = parseFloat(priceStr);
-        if (!sums[date]) sums[date] = 0;
-        sums[date] += price;
-        anzahl += 1;
-        summe += price;
-    }
-  });
-
-    document.querySelector(".anzahl").innerHTML = `Verkaufte Bascettasterne: <strong>${anzahl}</strong>`;
-    document.querySelector(".summe").innerHTML = `Gesamtsumme: <strong>${summe.toFixed(2).replace('.', ',')} €</strong>`;
-
-  const sortedDates = Object.keys(sums).sort((a, b) => new Date(a) - new Date(b));
-
-  let runningTotal = 0;
-  const cumulativeValues = sortedDates.map(date => {
-    runningTotal += sums[date];
-    return runningTotal;
-  });
-
-  drawChart(sortedDates, cumulativeValues);
-}
-
-function drawChart(labels, values) {
-  const ctx = document.getElementById("diagrammBascetta").getContext("2d");
-
-  if (chart) chart.destroy(); // falls aktualisiert, alten Chart löschen
-
-  chart = new Chart(ctx, {
-    type: "line",
+const ctx = document.getElementById('diagramm').getContext('2d');
+diagramm = new Chart(ctx, {
+    type: 'doughnut',
     data: {
-      labels: labels,
-      datasets: [{
-        label: "Bascettasterne",
-        data: values,
-        borderColor: darkMode ? "#FFA500" : "#FF8C00",
-        backgroundColor: "rgba(255, 140, 0, 0.15)",
-        borderWidth: 2,
-        pointRadius: 4,
-        fill: false,
-        tension: 0.2
-      }]
+        datasets: [
+            {
+                label: 'Aktionen',
+                labels: outerLabels,
+                data: [
+                    bascettasterne,
+                    bachadvent,
+                    summe('Schulfest'),
+                    summe('Basar'),
+                    summe('Schnuppertag'),
+                    summe('Sonstiges'),
+                    summe('Spende'),
+                    summe('Sportfest'),
+                    summe('Pfand')
+                ],
+                backgroundColor: darkMode 
+                    ? ["#3b82f6","#f97316","#9ca3af","#facc15","#38bdf8","#22c55e","#6366f1","#ef4444","#a3a3a3"]
+                    : ['rgba(54,162,235,0.7)','rgba(255,159,64,0.7)','rgba(201,203,207,0.7)','rgba(255,205,86,0.7)','rgba(75,192,192,0.7)','rgba(54,162,235,0.7)','rgba(153,102,255,0.7)','rgba(255,99,132,0.7)','rgba(200,200,200,0.7)'],
+                borderColor: darkMode 
+                    ? ["#1e40af","#c2410c","#52525b","#a16207","#0ea5e9","#16a34a","#4f46e5","#b91c1c","#737373"]
+                    : ['rgba(54,162,235,1)','rgba(255,159,64,1)','rgba(201,203,207,1)','rgba(255,205,86,1)','rgba(75,192,192,1)','rgba(54,162,235,1)','rgba(153,102,255,1)','rgba(255,99,132,1)','rgba(200,200,200,1)'],
+                borderWidth: 1,
+                radius: '100%',
+                cutout: '25%'
+            },
+            {
+                label: 'Innerer Ring',
+                labels: innerLabels,
+                data: [bascettasterne, bachadvent, rest],
+                backgroundColor: darkMode ? ['#2563eb','#ea580c','#52525b'] : ['rgba(54,162,235,1)','rgba(255,159,64,1)','rgba(150,150,150,0.9)'],
+                borderWidth: 0,
+                radius: '80%',
+                cutout: '45%'
+            }
+        ]
     },
     options: {
-      responsive: true,
-      scales: {
-        x: {
-          type: "time",
-          ticks: {
-            color: darkMode ? "#ffffff" : "#000000"
-          },
-          grid: {
-            color: darkMode ? "#303030" : "#C0C0C0"
-          },
-          time: {
-            parser: "dd.MM.yyyy",
-            tooltipFormat: "dd.MM.yyyy",
-            displayFormats: { day: "dd.MM.yyyy" }
-          }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: darkMode ? "#ffffff" : "#000000",
-            callback: function(value) {
-              return value + " €";
-            }
-          },
-          grid: {
-              color: darkMode ? "#303030" : "#C0C0C0"
-          }
-        }
-      },
+        responsive: true,
         plugins: {
             legend: {
-            display: false
+                position: 'bottom',
+                labels: { color: darkMode ? '#fff' : '#000', filter: i => i.datasetIndex===0 }
             },
             tooltip: {
-            displayColors: false,
-            callbacks: {
-                label: function(tooltipItem) {
-                return tooltipItem.formattedValue + ' €';
+                callbacks: {
+                    label: ctx => {
+                        const ds = ctx.dataset;
+                        const val = ctx.raw;
+                        const lbl = ds.labels ? ds.labels[ctx.dataIndex] : ctx.label; // Dataset-spezifische Labels
+                        if(ctx.datasetIndex===1){ 
+                            const total = ds.data.reduce((a,b)=>a+b,0);
+                            return `${lbl}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} € (${(val/total*100).toFixed(1)}%)`;
+                        } else { 
+                            return `${lbl}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} €`;
+                        }
+                    }
                 }
+            },
+            datalabels: {
+                display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ctx.datasetIndex===2 && ctx.dataIndex<3)),
+                color: '#fff',
+                font: { weight: '700', size: 12 },
+                formatter: (val,ctx) => {
+                    const ds = ctx.dataset;
+                    const lbl = ds.labels ? ds.labels[ctx.dataIndex] : '';
+                    if(ctx.datasetIndex===1){
+                        const total = ds.data.reduce((a,b)=>a+b,0);
+                        return Math.round(val/total*100)+'%';
+                    } else if(ctx.datasetIndex===0 && ctx.dataIndex<3){
+                        return lbl; // Bascettasterne/Bachadvent außen
+                    }
+                    return '';
+                },
+                anchor:'center',
+                align:'center'
             }
         }
-        }
-    }
-  });
-}
-
+    },
+    plugins: [ChartDataLabels]
+});
 
         //Tabelle
         function tabelleErstellen(){
@@ -782,11 +616,7 @@ function drawChart(labels, values) {
         });
         }
 
-        pfandDiagrammErstellen();
-        diagrammErstellen();
         tabelleErstellen();
-        loadSheet();
-
 
         let lastWidth = window.innerWidth;
         window.addEventListener('resize', function() {
