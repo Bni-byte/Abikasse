@@ -562,17 +562,28 @@ diagramm = new Chart(ctx, {
                 labels: { color: darkMode ? '#fff' : '#000', filter: i => i.datasetIndex===0 }
             },
             tooltip: {
-                callbacks: {
-                    label: ctx => {
-                        const ds = ctx.dataset;
-                        const val = ctx.raw;
-                        if(ctx.datasetIndex===1){
-                            const total = ds.data.reduce((a,b)=>a+b,0);
-                            return `${ctx.chart.data.labels[ctx.dataIndex]}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} € (${(val/total*100).toFixed(1)}%)`;
-                        }
-                        return `${ctx.label}: ${val.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})} €`;
-                    }
+              callbacks: {
+                title: items => {
+                  const ctx = items[0];
+                  if (ctx.datasetIndex === 1) {
+                    return ctx.dataset.innerLabels[ctx.dataIndex];
+                  }
+                  return ctx.label;
+                },
+                label: ctx => {
+                  const val = ctx.raw;
+                  if (ctx.datasetIndex === 1) {
+                    const ds = ctx.dataset;
+                    const total = ds.data.reduce((a, b) => a + b, 0);
+                    return `${val.toLocaleString('de-DE', {
+                      minimumFractionDigits: 2
+                    })} € (${(val / total * 100).toFixed(1)}%)`;
+                  }
+                  return `${val.toLocaleString('de-DE', {
+                    minimumFractionDigits: 2
+                  })} €`;
                 }
+              }
             },
             datalabels: {
                 display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ( ctx.datasetIndex===2 && ctx.dataIndex<3))),
