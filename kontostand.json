@@ -1,5 +1,5 @@
 {
-    "ziel": 25000.0,
+    "ziel": 20000.0,
     "aktionen": [
         {"datum": "Dez.24", "ob": "Bachadvent", "aktion": "Bachadvent", "betrag": 1102.50},
         {"datum": "Dez.24", "ob": "Bascettasterne", "aktion": "Bascettasterne", "betrag": 600.00},
@@ -44,4 +44,5 @@
         {"datum": "Dez.25", "ob": "Spende", "aktion": "Peter's Spende", "betrag": 50.00}
     ]
   }
+
 
