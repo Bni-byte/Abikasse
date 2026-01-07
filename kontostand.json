@@ -40,6 +40,8 @@
         {"datum": "Dez.25", "ob": "Pfand", "aktion": "Pfand", "betrag": 33.96},
         {"datum": "Dez.25", "ob": "Spende", "aktion": "Leni's Spende", "betrag": 10.00},
         {"datum": "Dez.25", "ob": "Basar", "aktion": "Winterbasar", "betrag": 188.34},
-        {"datum": "Dez.25", "ob": "Sonstiges", "aktion": "T-Shirts", "betrag": 15.00}
+        {"datum": "Dez.25", "ob": "Sonstiges", "aktion": "T-Shirts", "betrag": 15.00},
+        {"datum": "Dez.25", "ob": "Spende", "aktion": "Peter's Spende", "betrag": 50.00}
     ]
   }
+
