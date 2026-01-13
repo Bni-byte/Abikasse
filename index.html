@@ -120,36 +120,7 @@
             color: rgba(255, 99, 132, 1);
             font-weight: bold;
         }
-        .weiterleiter{
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            background-color: #d0d0d0;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-        .weiterleiter a{
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-        .weiterleiter a:hover{
-            text-decoration: underline;
-        }
-        .weiterleiter button{
-            background-color: #0099ff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .weiterleiter button:hover{
-            background-color: #008ecc;
-            transition: 0.3s;
-        }
+        
 
         #konfetti {
             position: fixed;
@@ -186,6 +157,17 @@
            }
          }
 
+    .weiterleiter{
+        margin-top: -10px;
+        margin-bottom: 10px;
+    }
+    a{
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+
     /*Infos*/
     .info{
         text-align: left;
@@ -212,6 +194,16 @@
         color: #FF8C00;
     }
 
+    /*Pfand*/
+    #pfand-container p{
+        color: #888;
+        margin-top: -10px;
+        text-align: center;
+        font-size: 1rem;
+    }
+    #pfand-container strong{
+        color: #025DB9;
+    }
 
     /*Dark-Mode*/
     @media (prefers-color-scheme: dark) {
@@ -247,10 +239,6 @@
         tr:hover{
             background-color: rgb(84, 84, 84);
             transition: 0.4s;
-        }
-        .weiterleiter{
-            background-color: #232323;
-            box-shadow: 0 5px 10px rgba(255, 255, 255, 0.5);
         }
         .info{
             background-color: #383838;
@@ -414,8 +402,8 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 500);//500
-        }, 3000);//3000
+            }, 5);//500
+        }, 3);//3000
 
         document.getElementById("weiter").addEventListener("click", () => {
             const logo = document.getElementById("logo");
@@ -438,22 +426,29 @@
         <p id="geschaft" class="laden"></p>
         <!--<canvas id="konfetti"></canvas>-->
 
-        <!--<div class="weiterleiter">
-            <button><a href="https://a26-bascettasterne.netlify.app">Bascettasterne</a></button>
-            <button><a href="https://abikasse26.netlify.app/sponsoren.html">Sponsoren</a></button>
-        </div>-->
-
-        <!--<div class="info">
-            <h2>Bachadvent</h2>
+        <div class="info">
+            <h2>Sponsoren/Spenden</h2>
             <ul class="infoList">
-                <li>Bachadvent-App -> wenn man Ort zum Spendensammeln nicht findet</li>
-                <li>offizielle Ergebnisse am Sonntag Abend</li>
+                <a href="/sponsoren.html">Informationen</a>
             </ul>
-        </div>-->
+        </div>
 
         <div class="diagrammContainer">
             <h2>Aktionen</h2>
             <canvas class="canvas" id="diagramm"></canvas>
+        </div>
+
+        <div class="diagrammContainer" id ="bascettastern-container">
+            <h2>Bascetta-Aktion</h2>
+            <p class="anzahl" id="anzahlB"></p>
+            <p class="summe" id="summeB"></p>
+            <canvas class="canvas" id="diagrammBascetta"></canvas>
+        </div>
+
+        <div class="diagrammContainer" id="pfand-container">
+            <h2>Pfand-Aktion</h2>
+            <p class="summe" id="summeP"></p>
+            <canvas class="canvas" id="diagrammPfand"></canvas>
         </div>
 
         <div id="tabellenContainer">
@@ -508,6 +503,203 @@
                 origin: { x, y }
             });
         }, 4000);*/
+
+
+//Diagramm Pfand
+    function pfandDiagrammErstellen(){
+    fetch("pfand.csv")
+        .then(response => response.text())
+        .then(data => {
+            let zeilen = data.split("\n");
+            let datenPunkte = [];
+            let summe = 0;
+
+            for (let i = 1; i < zeilen.length; i++) {
+                if(zeilen[i].trim() === "") continue;
+                let teile = zeilen[i].split(";");
+                let datumStr = teile[0].trim();
+                let betrag = parseFloat(teile[1]);
+
+                let datumTeile = datumStr.split(".");
+                let datum = new Date(datumTeile[2], datumTeile[1] - 1, datumTeile[0]);
+
+                if (!isNaN(betrag) && !isNaN(datum.getTime())) {
+                    summe += betrag;
+                    datenPunkte.push({ x: datum, y: summe });
+                }
+            }
+            document.querySelector("#summeP").innerHTML = `Gesamtsumme: <strong>${summe.toFixed(2).replace('.', ',')} €</strong>`;
+
+            if (chartPfandPosition) {
+                chartPfandPosition.destroy();
+            }
+            // Diagramm erstellen
+            chartPfandPosition = new Chart(document.getElementById("diagrammPfand").getContext('2d'), {
+                type: "line",
+                data: {
+                    datasets: [{
+                        label: "Pfand",
+                        data: datenPunkte,
+                        borderColor: darkMode ? "#0FA4FA" : "#025DB9",
+                        backgroundColor: "rgba(3, 140, 219, 0.15)",
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            ticks: {
+                                color: darkMode ? "#ffffff" : "#000000",
+                                callback: function(value) {
+                                    return value + " €";
+                                }
+                            },
+                            grid: {
+                                color: darkMode ? "#303030" : "#C0C0C0"
+                            }
+                        },
+                        x: {
+                            type: "time", // Zeitachse
+                            time: {
+                                unit: "day",
+                                displayFormats: {
+                                    day: 'dd.MM.yyyy'
+                                },
+                                tooltipFormat: 'dd.MM.yyyy'
+                            },
+                            ticks: {
+                                color: darkMode ? "#ffffff" : "#000000"
+                            },
+                            grid: {
+                                color: darkMode ? "#303030" : "#C0C0C0"
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            displayColors: false,
+                            callbacks: {
+                              label: function(tooltipItem) {
+                                return tooltipItem.formattedValue + ' €';
+                              }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+}
+
+//Bascettasterne Diagramm
+let chart;
+
+async function loadSheet() {
+  const sheetId = "1_uqyRuyqHhOBEK76Wr3pWatCmAwTP7tn8WJv9Hh55D8";
+  const gid = 0;  
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}&nocache=${Date.now()}`;
+
+  const res = await fetch(url);
+  const csv = await res.text();
+  const rows = csv.trim().split("\n").slice(1).map(r => r.split(","));
+
+  const sums = {};
+  let anzahl = 0;
+  let summe = 0;
+  rows.forEach(r => {
+    if(r[4] == "im Web"){
+        const date = r[0];
+        const priceStr = r[2].replace("€","").trim();
+        const price = parseFloat(priceStr);
+        if (!sums[date]) sums[date] = 0;
+        sums[date] += price;
+        anzahl += 1;
+        summe += price;
+    }
+  });
+
+    document.querySelector("#anzahlB").innerHTML = `Verkaufte Bascettasterne: <strong>${anzahl}</strong>`;
+    document.querySelector("#summeB").innerHTML = `Gesamtsumme: <strong>${summe.toFixed(2).replace('.', ',')} €</strong>`;
+
+  const sortedDates = Object.keys(sums).sort((a, b) => new Date(a) - new Date(b));
+
+  let runningTotal = 0;
+  const cumulativeValues = sortedDates.map(date => {
+    runningTotal += sums[date];
+    return runningTotal;
+  });
+
+  drawChart(sortedDates, cumulativeValues);
+}
+
+function drawChart(labels, values) {
+  const ctx = document.getElementById("diagrammBascetta").getContext("2d");
+
+  if (chart) chart.destroy(); // falls aktualisiert, alten Chart löschen
+
+  chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Bascettasterne",
+        data: values,
+        borderColor: darkMode ? "#FFA500" : "#FF8C00",
+        backgroundColor: "rgba(255, 140, 0, 0.15)",
+        borderWidth: 2,
+        pointRadius: 4,
+        fill: true,
+        tension: 0.2
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          type: "time",
+          ticks: {
+            color: darkMode ? "#ffffff" : "#000000"
+          },
+          grid: {
+            color: darkMode ? "#303030" : "#C0C0C0"
+          },
+          time: {
+            parser: "dd.MM.yyyy",
+            tooltipFormat: "dd.MM.yyyy",
+            displayFormats: { day: "dd.MM.yyyy" }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: darkMode ? "#ffffff" : "#000000",
+            callback: function(value) {
+              return value + " €";
+            }
+          },
+          grid: {
+              color: darkMode ? "#303030" : "#C0C0C0"
+          }
+        }
+      },
+        plugins: {
+            legend: {
+            display: false
+            },
+            tooltip: {
+            displayColors: false,
+            callbacks: {
+                label: function(tooltipItem) {
+                return tooltipItem.formattedValue + ' €';
+                }
+            }
+        }
+        }
+    }
+  });
+}
 
 // Aktionen-Diagramm
 const summe = ob => data.aktionen.filter(a => a.ob === ob).reduce((t,a) => t + a.betrag, 0);
@@ -605,10 +797,8 @@ diagramm = new Chart(ctx, {
         }
     },
     plugins: [ChartDataLabels]
-});
-
-
-
+}
+);
 
         //Tabelle
         function tabelleErstellen(){
@@ -624,6 +814,8 @@ diagramm = new Chart(ctx, {
         }
 
         tabelleErstellen();
+        pfandDiagrammErstellen();
+        loadSheet();
 
         let lastWidth = window.innerWidth;
         window.addEventListener('resize', function() {
