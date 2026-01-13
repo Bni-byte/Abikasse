@@ -808,6 +808,11 @@ diagramm = new Chart(ctx, {
             const geld = aktionen.betrag;
             const geldgetrennt= geld.toFixed(2).toString().split('.');
             const geldMitZeichen = geldgetrennt.join(',') + " €";
+            if(geldMitZeichen[0] === '-'){
+                tr.style.background = 'rgba(255, 0, 0, 0.2)';
+            } else{
+                tr.style.background = 'rgba(144, 238, 144, 0.2)';
+            }
             tr.innerHTML = `<td>${aktionen.datum}</td><td>${aktionen.aktion}</td><td id="geld">${geldMitZeichen}</td>`;
             tabelle.appendChild(tr);
         });
