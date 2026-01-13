@@ -14,12 +14,13 @@
     <meta name="twitter:description" content="Einnahmen/Aktionen der Abikasse A26">
     <meta name="twitter:image" content="https://abikasse26.netlify.app/a26logo.png?v=2">
     <title>Abikasse A26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         html{
             height: 100%;
         }
         body{
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             text-align: center;
             padding: 15px;
             background-color: #f4f4f9;
@@ -93,24 +94,28 @@
             font-size: 1rem;
             color: #888;
         }
-        #tabelle{
-            text-align: left;
-            border-collapse: collapse;
-            width: 100%;
-            border-radius: 50%;
+        #tabelle {
+          border-collapse: separate;
+          border-spacing: 0;
+          overflow: hidden;
+          border-radius: 12px;
+          margin-top: 4%;
         }
-        td, th{
-            border: solid rgb(128, 128, 128) 1px;
-            padding: 2px;
-            padding-right: 5px;
-        }
-        th{
-            background-color: #4d4d4d;
+
+        th {
+            background: linear-gradient(135deg, #cdcdcd, #4c4c4c);
             color: white;
+            padding: 10px;
+            font-weight: 600;
         }
-        tr:hover{
-            background-color: rgb(231, 231, 231);
-            transition: 0.4s;
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        tr:last-child td {
+          border-bottom: none;
         }
         #geld{
             text-align: right;
@@ -165,6 +170,9 @@
         text-decoration: none;
         color: #007bff;
         font-weight: bold;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(37,99,235,0.1);
     }
 
 
@@ -205,6 +213,34 @@
         color: #025DB9;
     }
 
+
+    /*Moderner*/
+    .container,
+    .info {
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(6px);
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    /*Animationen*/
+    .container {
+        animation: fadeUp 0.6s ease;
+    }
+    
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+
     /*Dark-Mode*/
     @media (prefers-color-scheme: dark) {
         .body {
@@ -233,7 +269,7 @@
             border: solid rgb(128, 128, 128) 1px;
         }
         th{
-            background-color: rgb(84, 84, 84);
+            background: linear-gradient(135deg, #3d4653, #7f95c4);
             color: rgb(255, 255, 255);
         }
         tr:hover{
@@ -243,6 +279,13 @@
         .info{
             background-color: #383838;
             border: solid rgb(84, 84, 84) 1px;
+        }
+
+        /*Moderner*/
+        .container,
+        .info {
+            background: rgba(18,18,18,0.85);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
     }
@@ -297,7 +340,7 @@
     }
 
     .a26Zeichen.fill path {
-        animation: draw 2s ease-in-out forwards, fuellen 1s ease-in 1.5s forwards;
+        animation: draw 1.5s ease-in-out forwards, fuellen 1s ease-in 1s forwards;
     }
 
     @keyframes draw {
@@ -345,7 +388,7 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
     </script>
-
+    
 </head>
 <body id="body">
 
@@ -402,8 +445,8 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 5);//500
-        }, 3);//3000
+            }, 500);//500
+        }, 1500);//3000
 
         document.getElementById("weiter").addEventListener("click", () => {
             const logo = document.getElementById("logo");
