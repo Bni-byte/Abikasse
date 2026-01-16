@@ -821,7 +821,7 @@ diagramm = new Chart(ctx, {
               }
             },
             datalabels: {
-                display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ( ctx.datasetIndex===2 || ( ctx.datasetIndex===3 && ctx.dataIndex<4)))),
+                display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ( ctx.datasetIndex===2 || ( ctx.datasetIndex===3 || ( ctx.datasetIndex===4 && ctx.dataIndex<5))))),
                 color: ctx => darkMode ? '#fff' : '#000',
                 font: { weight: '700', size: 12 },
                 formatter: (val,ctx) => {
@@ -829,7 +829,7 @@ diagramm = new Chart(ctx, {
                     if(ctx.datasetIndex===1){
                         const total = ds.data.reduce((a,b)=>a+b,0);
                         return Math.round(val/total*100)+'%';
-                    } else if(ctx.datasetIndex===0 && ctx.dataIndex<4){
+                    } else if(ctx.datasetIndex===0 && ctx.dataIndex<5){
                         return ctx.chart.data.labels[ctx.dataIndex];
                     }
                     return '';
