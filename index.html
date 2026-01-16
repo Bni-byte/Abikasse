@@ -388,7 +388,7 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
     </script>
-    
+
 </head>
 <body id="body">
 
@@ -754,7 +754,7 @@ const ctx = document.getElementById('diagramm').getContext('2d');
 diagramm = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Basare', 'Schnuppertag', 'Sonstiges', 'Spenden', 'Sportfest', 'Pfand'],
+        labels: ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Spenden', 'Basare', 'Schnuppertag', 'Sonstiges', 'Sportfest', 'Pfand'],
         datasets: [
             {
                 label: 'Aktionen',
@@ -762,10 +762,10 @@ diagramm = new Chart(ctx, {
                     bascettasterne,
                     bachadvent,
                     summe('Schulfest'),
+                    summe('Spende'),
                     summe('Basar'),
                     summe('Schnuppertag'),
                     summe('Sonstiges'),
-                    summe('Spende'),
                     summe('Sportfest'),
                     summe('Pfand')
                 ],
