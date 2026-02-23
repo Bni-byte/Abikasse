@@ -21,6 +21,7 @@
         {"datum": "Sep.25", "ob": "Pfand", "aktion": "Pfand", "betrag": 56.33},
         {"datum": "Sep.25", "ob": "Sportfest", "aktion": "Ausgaben Sportfest", "betrag": -82.00},
         {"datum": "Sep.25", "ob": "Sportfest", "aktion": "Einnahmen Sportfest", "betrag": 739.78},
+        {"datum": "Okt.25", "ob": "Ausgabe", "aktion": "Kontogebühren", "betrag": -5.00},
         {"datum": "Okt.25", "ob": "Pfand", "aktion": "Pfand", "betrag": 17.74},
         {"datum": "Okt.25", "ob": "Bascettasterne", "aktion": "Einnahmen B-Sterne", "betrag": 20.00},
         {"datum": "Nov.25", "ob": "Basar", "aktion": "Herbstbasar", "betrag": 214.33},
@@ -41,6 +42,7 @@
         {"datum": "Dez.25", "ob": "Spende", "aktion": "Leni's Spende", "betrag": 10.00},
         {"datum": "Dez.25", "ob": "Basar", "aktion": "Winterbasar", "betrag": 188.34},
         {"datum": "Dez.25", "ob": "Sonstiges", "aktion": "T-Shirts", "betrag": 15.00},
+        {"datum": "Dez.25", "ob": "Ausgabe", "aktion": "Kontogebühren", "betrag": -5.15},
         {"datum": "Jan.26", "ob": "Spende", "aktion": "Peter's Spende", "betrag": 50.00},
         {"datum": "Jan.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 22.97},
         {"datum": "Jan.26", "ob": "Spende", "aktion": "Spende Implenia", "betrag": 500.00},
@@ -48,6 +50,7 @@
         {"datum": "Feb.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -184.98}
     ]
   }
+
 
 
 
