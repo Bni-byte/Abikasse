@@ -47,7 +47,8 @@
         {"datum": "Jan.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 22.97},
         {"datum": "Jan.26", "ob": "Spende", "aktion": "Spende Implenia", "betrag": 500.00},
         {"datum": "Jan.26", "ob": "Spende", "aktion": "Spende Agil", "betrag": 100.00},
-        {"datum": "Feb.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -184.98}
+        {"datum": "Feb.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -184.98},
+        {"datum": "Feb.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 14.34}
     ]
   }
 
