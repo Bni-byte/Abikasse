@@ -125,7 +125,6 @@
             color: rgba(255, 99, 132, 1);
             font-weight: bold;
         }
-        
 
         #konfetti {
             position: fixed;
@@ -358,7 +357,7 @@
         }
     }
 
-    /*Silvester-Edition*/
+    /*Silvester-Edition
     iframe {
         width: 100%;
         height: 100vh;
@@ -378,16 +377,16 @@
         border-radius: 5px;
         cursor: pointer;
         z-index: 10;
-    }
+    }*/
     </style>
     
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
-    </script>
+    </script>-->
 
 </head>
 <body id="body">
@@ -445,8 +444,8 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 500);//500
-        }, 1500);//3000
+            }, 4);//500  //500
+        }, 1);//3000 //1500
 
         document.getElementById("weiter").addEventListener("click", () => {
             const logo = document.getElementById("logo");
@@ -525,9 +524,10 @@
                 .then(data => {
 
         //Kontostand
+        const ausgaben = data.aktionen.filter(a => a.ob === 'Ausgabe').reduce((total, aktion) => total + aktion.betrag, 0);
         engSchr = data.aktionen.reduce((total, aktion) => total + aktion.betrag, 0);
         document.getElementById("kontostand").innerText = engSchr.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
-        document.getElementById("geschaft").innerText = "geschafft: " + Math.round(engSchr / data.ziel * 100) + "%";
+        document.getElementById("geschaft").innerText = "geschafft: " + Math.round((engSchr - ausgaben) / data.ziel * 100) + "%";
 
 
         //Konfetti
