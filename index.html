@@ -748,7 +748,8 @@ function drawChart(labels, values) {
 const summe = ob => data.aktionen.filter(a => a.ob === ob).reduce((t,a) => t + a.betrag, 0);
 const bascettasterne = summe('Bascettasterne');
 const bachadvent = summe('Bachadvent');
-const rest = engSchr - bascettasterne - bachadvent;
+const ohneAusgaben = engSchr - summe('Ausgabe');
+const rest = ohneAusgaben - bascettasterne - bachadvent;
 
 const ctx = document.getElementById('diagramm').getContext('2d');
 diagramm = new Chart(ctx, {
