@@ -54,7 +54,8 @@
         {"datum": "Mär.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -172.94},
         {"datum": "Mär.26", "ob": "Ausgabe", "aktion": "Abiparty", "betrag": -16.99},
         {"datum": "Mär.26", "ob": "Ausgabe", "aktion": "Pullis & Tshirts", "betrag": -3699.62},
-        {"datum": "Mär.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 11.13}
+        {"datum": "Mär.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 11.13},
+        {"datum": "Mär.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -59.00}
     ]
   }
 
