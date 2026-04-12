@@ -755,7 +755,7 @@ const ctx = document.getElementById('diagramm').getContext('2d');
 diagramm = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Basare', 'Spenden', 'Abiparty', 'Schnuppertag', 'Sonstiges', 'Sportfest', 'Pfand'],
+        labels: ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Basare', 'Spenden', 'Schnuppertag', 'Sonstiges', 'Abiparty', 'Sportfest', 'Pfand'],
         datasets: [
             {
                 label: 'Aktionen',
@@ -765,9 +765,9 @@ diagramm = new Chart(ctx, {
                     summe('Schulfest'),
                     summe('Basar'),
                     summe('Spende'),
-                    summe('Abiparty'),
                     summe('Schnuppertag'),
                     summe('Sonstiges'),
+                    summe('Abiparty'),
                     summe('Sportfest'),
                     summe('Pfand')
                 ],
