@@ -65,6 +65,7 @@
         {"datum": "Mär.26", "ob": "Spende", "aktion": "Spende Allianz", "betrag": 100.00},
         {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 21.56},
         {"datum": "Mär.26", "ob": "Basar", "aktion": "Hotdog Basar (kein Wert)", "betrag": 0.00},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -35.00}
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -235.00},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -107.66}
     ]
   }
