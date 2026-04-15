@@ -67,6 +67,7 @@
         {"datum": "Mär.26", "ob": "Basar", "aktion": "Hotdog Basar (kein Wert)", "betrag": 0.00},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -235.00},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -107.66},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -23.99}
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -23.99},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -450.00}
     ]
   }
