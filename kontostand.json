@@ -69,6 +69,7 @@
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -135.22},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -23.99},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -250.00},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -260.00}
+        {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 13.68}
+        
     ]
   }
