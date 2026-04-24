@@ -63,13 +63,18 @@
         {"datum": "Mär.26", "ob": "Basar", "aktion": "Hotdog Basar", "betrag": 154.10},
         {"datum": "Mär.26", "ob": "Spende", "aktion": "Spende Seeboth", "betrag": 9.00},
         {"datum": "Mär.26", "ob": "Spende", "aktion": "Spende Allianz", "betrag": 100.00},
-        {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 21.56},
         {"datum": "Mär.26", "ob": "Basar", "aktion": "Hotdog Basar (kein Wert)", "betrag": 0.00},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -235.00},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -135.22},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -23.99},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -250.00},
-        {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 13.68}
-        
+        {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 21.56},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -35.00},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -200.00},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -135.22, "bemerkung": "plane"},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -23.99, "bemerkung": "schrauben jannis"},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "afterparty", "betrag": -250.00, "bemerkung": "bösleben"},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "afterparty", "betrag": -466.49, "bemerkung": "bösleben"},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "afterparty", "betrag": -185.00, "bemerkung": "bösleben"},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -260.00, "bemerkung": "limousine"},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -45.99, "bemerkung": "sophie"},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -22.00, "bemerkung": "arthur w"},
+        {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 25.06}
     ]
   }
