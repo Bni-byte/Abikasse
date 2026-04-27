@@ -75,6 +75,7 @@
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -260.00, "bemerkung": "limousine"},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -45.99, "bemerkung": "sophie"},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -22.00, "bemerkung": "arthur w"},
-        {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 25.06}
+        {"datum": "Apr.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 25.06},
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -12.17, "bemerkung": "Tamino"}
     ]
   }
