@@ -77,6 +77,6 @@
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -45.99, "bemerkung": "sophie"},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -22.00, "bemerkung": "arthur w"},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -12.17, "bemerkung": "Tamino"},
-        {"datum": "Apr.26", "ob": "Sonstiges", "aktion": "Pullis & Tshirts", "betrag": 100.00}
+        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Pullis & Tshirts", "betrag": 100.00}
     ]
   }
