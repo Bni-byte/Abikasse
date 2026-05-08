@@ -78,6 +78,6 @@
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -22.00, "bemerkung": "arthur w"},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "letzter Schultag", "betrag": -12.17, "bemerkung": "Tamino"},
         {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Pullis & Tshirts", "betrag": 100.00},
-        {"datum": "Mai.26", "ob": "Spende", "aktion": "Sparkasse", "betrag": 1500.00},
+        {"datum": "Mai.26", "ob": "Spende", "aktion": "Sparkasse", "betrag": 1500.00}
     ]
   }
