@@ -80,7 +80,8 @@
         {"datum": "Mai.26", "ob": "Spende", "aktion": "Sparkasse", "betrag": 1500.00},
         {"datum": "Mai.26", "ob": "Pfand", "aktion": "Pfand", "betrag": 7.43},
         {"datum": "Mär.26", "ob": "Spende", "aktion": "Spende Allianz", "betrag": 100.00},
-        {"datum": "Mai.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -28.94},
-        {"datum": "Mai.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -3473.31}
+        {"datum": "Mai.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -28.94, "bemerkung": "Ariane Deko Temu"},
+        {"datum": "Mai.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": -3473.31},
+        {"datum": "Mai.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -95.25, "bemerkung": "große Sterne"}
     ]
   }
