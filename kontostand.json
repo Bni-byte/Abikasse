@@ -93,6 +93,7 @@
         {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -144.00, "bemerkung": "Lichterketten"},
         {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -12.00, "bemerkung": "Batterien"},
         {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -134.47, "bemerkung": "Versicherung"},
-        {"datum": "Apr.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": 1320.00}
+        {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abizeitung", "betrag": 1320.00},
+        {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -122.88, "bemerkung": "Henrik"},
     ]
   }
