@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Vorschau -->
     <meta property="og:title" content="A26 Abikasse">
     <meta property="og:description" content="Einnahmen/Aktionen der Abikasse A26">
     <meta property="og:image" content="https://abikasse26.netlify.app/a26logo.png?v=2">
@@ -73,12 +72,12 @@
             margin-top: 0px;
         }
         #geschaft{
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #555;
             margin-bottom: 5px;
         }
         #gewinn{
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: rgba(255, 99, 132, 1);
             margin-bottom: 20px;
         }
@@ -196,6 +195,30 @@
     .infoList{
         margin-top: 10px;
         padding-left: 20px;
+    }
+
+    /* Ausstehende Kosten Tabelle */
+    .ausstehend-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .ausstehend-table td {
+        padding: 8px 5px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    }
+    .ausstehend-table td:last-child {
+        text-align: right;
+    }
+    .ausstehend-table tr:last-child td {
+        border-bottom: none;
+    }
+    .ausstehend-summe {
+        text-align: right;
+        font-weight: bold;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 2px solid rgba(128, 128, 128, 0.4);
     }
 
     /*Bascettasterne*/
@@ -366,29 +389,8 @@
         }
     }
 
-    /*Silvester-Edition
-    iframe {
-        width: 100%;
-        height: 100vh;
-        border: none;
-        margin: 0;
-        padding: 0;
-    }
-    #weiter {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        padding: 10px 20px;
-        font-size: 1rem;
-        background-color: #0099ff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        z-index: 10;
-    }*/
     </style>
-    
+
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -396,7 +398,7 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "qgijsrlfe7");
     </script>
-
+    
 </head>
 <body id="body">
 
@@ -435,10 +437,6 @@
         103 344 128 50 10 254 5 301 -8z"/>
         </g>
         </svg>
-
-        <!--Silvester-Edition-->
-        <!--<iframe src="https://a26-abikassen-feuerwerk.netlify.app/"></iframe>
-        <button id="weiter">weiter</button>-->
     </div>
 
     <script>
@@ -453,22 +451,8 @@
                 document.getElementsByTagName('body')[0].classList.add("body");
                 document.getElementsByTagName('html')[0].removeAttribute('id');
                 document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 500);//500  //500
-        }, 1500);//3000 //1500
-
-        document.getElementById("weiter").addEventListener("click", () => {
-            const logo = document.getElementById("logo");
-            logo.classList.add("ausblenden");
-        
-            setTimeout(() => {
-                logo.style.display = "none";
-                document.querySelector(".container").style.display = "block";
-                document.getElementsByTagName('html')[0].classList.add("html");
-                document.getElementsByTagName('body')[0].classList.add("body");
-                document.getElementsByTagName('html')[0].removeAttribute('id');
-                document.getElementsByTagName('body')[0].removeAttribute('id');
-            }, 500);//500
-        });
+            }, 4);//500  //500
+        }, 1);//3000 //1500
     </script>
 
     <div class="container">
@@ -476,8 +460,27 @@
         <p id="kontostand" class="laden">Lade Kontostand...</p>
         <p id="geschaft" class="laden"></p>
         <p id="gewinn" class="laden"></p>
-        <!--<canvas id="konfetti"></canvas>-->
 
+        <div class="info">
+            <h2 style="margin-top: 0; color: rgba(255, 99, 132, 1);">Noch zu bezahlen</h2>
+            <table class="ausstehend-table">
+                <tr>
+                    <td>Stadthalle</td>
+                    <td>1.635,40 €</td>
+                </tr>
+                <tr>
+                    <td>Fotograf</td>
+                    <td>990,00 €</td>
+                </tr>
+                <tr>
+                    <td>Blumen</td>
+                    <td>514,80 €</td>
+                </tr>
+            </table>
+            <div class="ausstehend-summe">
+                Gesamt: 3.140,20 €
+            </div>
+        </div>
         <div class="info">
             <h2>Sponsoren/Spenden</h2>
             <ul class="infoList">
@@ -539,23 +542,6 @@
         document.getElementById("kontostand").innerText = engSchr.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
         document.getElementById("geschaft").innerText = "geschafft: " + Math.round((engSchr - ausgaben) / data.ziel * 100) + "%";
         document.getElementById("gewinn").innerText = "Gesamtgewinn: " + (engSchr - ausgaben).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
-
-        //Konfetti
-        /*setTimeout(() => {
-            const geld = document.getElementById("kontostand");
-            const rect = geld.getBoundingClientRect();
-            const x = (rect.left + rect.right) / 2 / window.innerWidth;
-            const y = (rect.top + rect.bottom) / 2 / window.innerHeight;
-
-            confetti({
-                particleCount: 200,
-                startVelocity: 30,
-                spread: 180,
-                ticks: 300,
-                gravity: 0.8,
-                origin: { x, y }
-            });
-        }, 4000);*/
 
 
 //Diagramm Pfand
@@ -765,28 +751,27 @@ const ctx = document.getElementById('diagramm').getContext('2d');
 diagramm = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Bascettasterne', 'Bachadvent', 'Spenden', 'Schulfest', 'Basare', 'Schnuppertag', 'Sonstiges', 'Sportfest', 'Abiparty', 'Pfand'],
+        labels: ['Bascettasterne', 'Bachadvent', 'Schulfest', 'Basare', 'Spenden', 'Schnuppertag', 'Sonstiges', 'Sportfest', 'Pfand'],
         datasets: [
             {
                 label: 'Aktionen',
                 data: [
                     bascettasterne,
                     bachadvent,
-                    summe('Spende'),
                     summe('Schulfest'),
                     summe('Basar'),
+                    summe('Spende'),
                     summe('Schnuppertag'),
                     summe('Sonstiges'),
                     summe('Sportfest'),
-                    summe('Abiparty'),
                     summe('Pfand')
                 ],
                 backgroundColor: darkMode 
-                    ? ["#3b82f6","#f97316","#9ca3af","#facc15","#38bdf8","#22c55e","#6366f1","#ef4444","#025DB9","#a3a3a3"]
-                    : ['rgba(54,162,235,0.7)','rgba(255,159,64,0.7)','rgba(201,203,207,0.7)','rgba(255,205,86,0.7)','rgba(75,192,192,0.7)','rgba(54,162,235,0.7)','rgba(153,102,255,0.7)','rgba(255,99,132,0.7)','rgba(2, 93, 185, 0.7)','rgba(200,200,200,0.7)'],
+                    ? ["#3b82f6","#f97316","#9ca3af","#facc15","#38bdf8","#22c55e","#6366f1","#ef4444","#a3a3a3"]
+                    : ['rgba(54,162,235,0.7)','rgba(255,159,64,0.7)','rgba(201,203,207,0.7)','rgba(255,205,86,0.7)','rgba(75,192,192,0.7)','rgba(54,162,235,0.7)','rgba(153,102,255,0.7)','rgba(255,99,132,0.7)','rgba(200,200,200,0.7)'],
                 borderColor: darkMode 
-                    ? ["#1e40af","#c2410c","#52525b","#a16207","#0ea5e9","#16a34a","#4f46e5","#b91c1c","#025DB9","#737373"]
-                    : ['rgba(54,162,235,1)','rgba(255,159,64,1)','rgba(201,203,207,1)','rgba(255,205,86,1)','rgba(75,192,192,1)','rgba(54,162,235,1)','rgba(153,102,255,1)','rgba(255,99,132,1)','rgba(2, 93, 185, 1)','rgba(200,200,200,1)'],
+                    ? ["#1e40af","#c2410c","#52525b","#a16207","#0ea5e9","#16a34a","#4f46e5","#b91c1c","#737373"]
+                    : ['rgba(54,162,235,1)','rgba(255,159,64,1)','rgba(201,203,207,1)','rgba(255,205,86,1)','rgba(75,192,192,1)','rgba(54,162,235,1)','rgba(153,102,255,1)','rgba(255,99,132,1)','rgba(200,200,200,1)'],
                 borderWidth: 1,
                 radius: '100%',
                 cutout: '25%'
@@ -833,7 +818,7 @@ diagramm = new Chart(ctx, {
               }
             },
             datalabels: {
-                display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ( ctx.datasetIndex===2 || ( ctx.datasetIndex===3 || ( ctx.datasetIndex===4 && ctx.dataIndex<5) || ( ctx.datasetIndex===5 && ctx.dataIndex<6))))),
+                display: ctx => (ctx.datasetIndex===1 || (ctx.datasetIndex===0 || ( ctx.datasetIndex===2 || ( ctx.datasetIndex===3 || ( ctx.datasetIndex===4 && ctx.dataIndex<5))))),
                 color: ctx => darkMode ? '#fff' : '#000',
                 font: { weight: '700', size: 12 },
                 formatter: (val,ctx) => {
@@ -841,23 +826,13 @@ diagramm = new Chart(ctx, {
                     if(ctx.datasetIndex===1){
                         const total = ds.data.reduce((a,b)=>a+b,0);
                         return Math.round(val/total*100)+'%';
-                    } else if(ctx.datasetIndex===0 && ctx.dataIndex<10){
+                    } else if(ctx.datasetIndex===0 && ctx.dataIndex<5){
                         return ctx.chart.data.labels[ctx.dataIndex];
                     }
                     return '';
                 },
                 anchor:'center',
-                align: ctx => {
-    if (ctx.datasetIndex === 0 && ctx.dataIndex === 8) return 'top';
-    if (ctx.datasetIndex === 0 && ctx.dataIndex === 9) return 'top';
-    return 'center';
-},
-
-offset: ctx => {
-    if (ctx.datasetIndex === 0 && ctx.dataIndex === 8) return -3;
-    if (ctx.datasetIndex === 0 && ctx.dataIndex === 9) return 8;
-    return 0;
-},
+                align:'center'
             }
         }
     },
