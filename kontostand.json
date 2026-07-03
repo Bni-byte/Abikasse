@@ -100,6 +100,7 @@
         {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -573.04, "bemerkung": "security"},
         {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -1700.00, "bemerkung": "DJ & Technik"},
         {"datum": "Jun.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -514.80, "bemerkung": "Leffler Blumen"},
-        {"datum": "Jul.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -1635.40, "bemerkung": "Stadthalle"}
+        {"datum": "Jul.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": -1635.40, "bemerkung": "Stadthalle"},
+        {"datum": "Jul.26", "ob": "Ausgabe", "aktion": "Abiball", "betrag": 666.38, "bemerkung": "Geld von Jahrgang"}
     ]
   }
