@@ -521,7 +521,7 @@
         engSchr = data.aktionen.reduce((total, aktion) => total + aktion.betrag, 0);
         document.getElementById("kontostand").innerText = engSchr.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
         document.getElementById("geschaft").innerText = "geschafft: " + Math.round((engSchr - ausgaben) / data.ziel * 100) + "%";
-        document.getElementById("gewinn").innerText = "Gesamtgewinn: " + (engSchr - ausgaben).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+        document.getElementById("gewinn").innerText = "Gesamtgewinn: " + (engSchr - ausgaben).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " € + 5.420,00 € (Abiball)";
 
 
 //Diagramm Pfand
